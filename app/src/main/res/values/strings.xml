@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyGolfTracker</string>
+    <string name="menu_addRound">Add Round</string>
+    <string name="button_addRound">Add Round</string>
+</resources>
