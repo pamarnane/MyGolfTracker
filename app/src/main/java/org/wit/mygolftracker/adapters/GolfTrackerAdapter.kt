@@ -10,7 +10,7 @@ interface GolfTrackerListener {
     fun onGolfRoundClick(golfRound: GolfRoundModel)
 }
 
-class GolfTrackerAdapter constructor(private var placemarks: List<GolfRoundModel>,
+class GolfTrackerAdapter constructor(private var golfRounds: List<GolfRoundModel>,
                                    private val listener: GolfTrackerListener) :
     RecyclerView.Adapter<GolfTrackerAdapter.MainHolder>() {
 
@@ -22,11 +22,11 @@ class GolfTrackerAdapter constructor(private var placemarks: List<GolfRoundModel
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        val placemark = placemarks[holder.adapterPosition]
-        holder.bind(placemark, listener)
+        val golfRound = golfRounds[holder.adapterPosition]
+        holder.bind(golfRound, listener)
     }
 
-    override fun getItemCount(): Int = placemarks.size
+    override fun getItemCount(): Int = golfRounds.size
 
     class MainHolder(private val binding : CardGolfRoundBinding) :
         RecyclerView.ViewHolder(binding.root) {

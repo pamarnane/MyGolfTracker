@@ -2,4 +2,6 @@
     <string name="app_name">MyGolfTracker</string>
     <string name="menu_addRound">Add Round</string>
     <string name="button_addRound">Add Round</string>
+    <string name="hint_courseName">Enter Course</string>
+    <string name="hint_date">Enter Date</string>
 </resources>

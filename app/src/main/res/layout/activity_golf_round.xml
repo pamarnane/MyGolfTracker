@@ -16,16 +16,16 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/purple_200"
+            android:background="@color/accent_green"
             android:fitsSystemWindows="true"
             app:elevation="0dip"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbarAdd"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:titleTextColor="@color/black" />
+                app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
@@ -39,12 +39,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-<!--                <EditText
+                <EditText
                     android:id="@+id/roundCourse"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="48dp"
                     android:layout_margin="8dp"
                     android:autofillHints=""
+                    android:hint="@string/hint_courseName"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
@@ -57,12 +58,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
+                    android:hint="@string/hint_date"
                     android:inputType="text"
                     android:maxLength="25"
                     android:maxLines="1"
+                    android:minHeight="48dp"
                     android:padding="8dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />-->
+                    android:textSize="14sp" />
 
 
                 <Button
@@ -77,6 +80,7 @@
                     android:text="@string/button_addRound"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
         </ScrollView>
 

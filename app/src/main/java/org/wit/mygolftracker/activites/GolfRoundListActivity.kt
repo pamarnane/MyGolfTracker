@@ -8,10 +8,12 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.mygolftracker.R
 import org.wit.mygolftracker.adapters.GolfTrackerAdapter
+import org.wit.mygolftracker.adapters.GolfTrackerListener
 import org.wit.mygolftracker.databinding.ActivityGolfRoundListBinding
 import org.wit.mygolftracker.main.MainApp
+import org.wit.mygolftracker.models.GolfRoundModel
 
-class GolfRoundListActivity : AppCompatActivity() {
+class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGolfRoundListBinding
@@ -22,11 +24,14 @@ class GolfRoundListActivity : AppCompatActivity() {
         binding = ActivityGolfRoundListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       // app = application as MainApp
-      //  setContentView(R.layout.activity_main)
+        binding.toolbar.title = title
+        setSupportActionBar(binding.toolbar)
+
+        app = application as MainApp
+
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-      //  binding.recyclerView.adapter = GolfTrackerAdapter(app.golfRounds.findAll(),this)
+        binding.recyclerView.adapter = GolfTrackerAdapter(app.golfRounds.findAll(),this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -42,5 +47,11 @@ class GolfRoundListActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onGolfRoundClick(golfRound: GolfRoundModel) {
+        val launcherIntent = Intent(this, GolfRoundActivity::class.java)
+        launcherIntent.putExtra("golfRound_edit", golfRound)
+        startActivityForResult(launcherIntent,0)
     }
 }

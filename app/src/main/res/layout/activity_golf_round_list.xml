@@ -8,9 +8,10 @@
     tools:context="org.wit.mygolftracker.activites.GolfRoundListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/accent_green"
         android:fitsSystemWindows="true"
         app:elevation="0dip"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -19,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextColor="@color/black" />
+            app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
