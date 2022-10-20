@@ -6,6 +6,7 @@ class GolfTrackerJSONStore : GolfTrackerStore {
     val golfRounds = ArrayList<GolfRoundModel>()
 
     override fun findAll(): List<GolfRoundModel> {
+        println("All GR:" + golfRounds)
         return golfRounds
     }
 

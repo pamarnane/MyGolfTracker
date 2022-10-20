@@ -4,4 +4,13 @@
     <string name="button_addRound">Add Round</string>
     <string name="hint_courseName">Enter Course</string>
     <string name="hint_date">Enter Date</string>
+    <string name="hint_hole1">Hole 1</string>
+    <string name="hint_hole2">Hole 2</string>
+    <string name="hint_hole3">Hole 3</string>
+    <string name="hint_hole4">Hole 4</string>
+    <string name="hint_hole5">Hole 5</string>
+    <string name="hint_hole6">Hole 6</string>
+    <string name="hint_hole7">Hole 7</string>
+    <string name="hint_hole8">Hole 8</string>
+    <string name="hint_hole9">Hole 9</string>
 </resources>

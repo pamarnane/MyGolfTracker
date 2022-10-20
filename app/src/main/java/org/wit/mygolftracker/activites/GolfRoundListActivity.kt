@@ -32,6 +32,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = GolfTrackerAdapter(app.golfRounds.findAll(),this)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,5 +54,10 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         val launcherIntent = Intent(this, GolfRoundActivity::class.java)
         launcherIntent.putExtra("golfRound_edit", golfRound)
         startActivityForResult(launcherIntent,0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }

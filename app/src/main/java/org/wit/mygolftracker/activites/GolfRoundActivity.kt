@@ -44,6 +44,16 @@ class GolfRoundActivity : AppCompatActivity() {
         binding.btnAdd.setOnClickListener() {
             golfRound.course = binding.roundCourse.text.toString()
             golfRound.date = binding.roundDate.text.toString()
+            golfRound.scores[0] = binding.hole1.text.toString().toInt()
+            golfRound.scores[1] = binding.hole2.text.toString().toInt()
+            golfRound.scores[2] = binding.hole3.text.toString().toInt()
+            golfRound.scores[3] = binding.hole4.text.toString().toInt()
+            golfRound.scores[4] = binding.hole5.text.toString().toInt()
+            golfRound.scores[5] = binding.hole6.text.toString().toInt()
+            golfRound.scores[6] = binding.hole7.text.toString().toInt()
+            golfRound.scores[7] = binding.hole8.text.toString().toInt()
+            golfRound.scores[8] = binding.hole9.text.toString().toInt()
+
             app.golfRounds.create(golfRound.copy())
             setResult(RESULT_OK)
             finish()
@@ -51,20 +61,18 @@ class GolfRoundActivity : AppCompatActivity() {
     }
 
     // create an OnDateSetListener
-    val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+    private val dateSetListener = object : DatePickerDialog.OnDateSetListener {
         var cal = Calendar.getInstance()
         override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
                                dayOfMonth: Int) {
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            updateDateInView()
+            println(year)
+            val myFormat = (dayOfMonth.toString() + "/" + monthOfYear.toString() + "/" + year.toString())
+            binding.roundDate.setText(myFormat)
         }
     }
 
-    private fun updateDateInView() {
-        val myFormat = "MM/dd/yyyy" // mention the format you need
-        val sdf = SimpleDateFormat(myFormat, Locale.US)
-        this.golfRound.date = sdf.format(cal.getTime())
-    }
+
 }

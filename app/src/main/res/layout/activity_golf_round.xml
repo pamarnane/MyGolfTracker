@@ -59,14 +59,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:hint="@string/hint_date"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:maxLength="25"
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="8dp"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
-
 
                 <Button
                     android:id="@+id/btnAdd"
@@ -80,6 +79,70 @@
                     android:text="@string/button_addRound"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/hole1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole1" />
+                <EditText
+                    android:id="@+id/hole2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole2" />
+                <EditText
+                    android:id="@+id/hole3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole3" />
+                <EditText
+                    android:id="@+id/hole4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole4" />
+                <EditText
+                    android:id="@+id/hole5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole5" />
+                <EditText
+                    android:id="@+id/hole6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole6" />
+                <EditText
+                    android:id="@+id/hole7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole7" />
+                <EditText
+                    android:id="@+id/hole8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole8" />
+                <EditText
+                    android:id="@+id/hole9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:hint="@string/hint_hole9" />
 
             </LinearLayout>
         </ScrollView>

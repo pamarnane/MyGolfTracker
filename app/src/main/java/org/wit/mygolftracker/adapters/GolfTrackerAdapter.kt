@@ -34,6 +34,7 @@ class GolfTrackerAdapter constructor(private var golfRounds: List<GolfRoundModel
         fun bind(golfRound: GolfRoundModel, listener: GolfTrackerListener) {
             binding.roundCourse.text = golfRound.course
             binding.roundDate.text = golfRound.date
+            binding.totalScore.text = golfRound.scores.sum().toString()
             binding.root.setOnClickListener { listener.onGolfRoundClick(golfRound) }
         }
     }
