@@ -7,6 +7,7 @@ import timber.log.Timber
 import timber.log.Timber.i
 
 class MainApp : Application() {
+
     val golfRounds = GolfTrackerJSONStore()
 
     override fun onCreate() {
