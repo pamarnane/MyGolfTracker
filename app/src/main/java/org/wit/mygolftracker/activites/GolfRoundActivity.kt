@@ -77,8 +77,8 @@ class GolfRoundActivity : AppCompatActivity() {
             cal.set(Calendar.YEAR, year)
             cal.set(Calendar.MONTH, monthOfYear)
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            println(year)
-            val myFormat = (dayOfMonth.toString() + "/" + monthOfYear.toString() + "/" + year.toString())
+            val updatedMonth = monthOfYear + 1
+            val myFormat = (dayOfMonth.toString() + "/" + updatedMonth.toString() + "/" + year.toString())
             binding.roundDate.setText(myFormat)
         }
     }

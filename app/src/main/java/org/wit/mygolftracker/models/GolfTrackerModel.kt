@@ -7,7 +7,7 @@ import java.util.*
 
 
 @Parcelize
-data class GolfRoundModel(var id: Int = 0,
+data class GolfRoundModel(var id: Long = 0,
                           var course: String = "",
                           var date: String = "",
                           var comment: String = "",

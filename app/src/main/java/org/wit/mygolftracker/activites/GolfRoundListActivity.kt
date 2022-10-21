@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.mygolftracker.R
 import org.wit.mygolftracker.adapters.GolfTrackerAdapter
@@ -17,6 +19,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGolfRoundListBinding
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +34,10 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GolfTrackerAdapter(app.golfRounds.findAll(),this)
+        loadGolfRounds()
+        //binding.recyclerView.adapter = GolfTrackerAdapter(app.golfRounds.findAll(),this)
+
+        registerRefreshCallback()
 
     }
 
@@ -56,8 +62,23 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         startActivityForResult(launcherIntent,0)
     }
 
+    private fun loadGolfRounds() {
+        showGolfRounds(app.golfRounds.findAll())
+    }
+
+    fun showGolfRounds (golfRounds: List<GolfRoundModel>) {
+        binding.recyclerView.adapter = GolfTrackerAdapter(golfRounds, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         binding.recyclerView.adapter?.notifyDataSetChanged()
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun registerRefreshCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { loadGolfRounds() }
     }
 }
