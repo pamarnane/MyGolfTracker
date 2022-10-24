@@ -1,14 +1,16 @@
-package org.wit.mygolftracker.activites
+package org.wit.mygolftracker.activities
 
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.DatePicker
 import org.wit.mygolftracker.R
 import org.wit.mygolftracker.databinding.ActivityGolfRoundBinding
 import org.wit.mygolftracker.main.MainApp
 import org.wit.mygolftracker.models.GolfRoundModel
-import java.text.SimpleDateFormat
+import timber.log.Timber.i
 import java.util.*
 
 
@@ -18,6 +20,7 @@ class GolfRoundActivity : AppCompatActivity() {
     var golfRound = GolfRoundModel()
     lateinit var app: MainApp
     var cal = Calendar.getInstance()
+    var edit = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,36 @@ class GolfRoundActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
+
+        if(intent.hasExtra("golfRound_edit")){
+            i("Data passed for edit")
+            edit = true
+            golfRound = intent.extras?.getParcelable("golfRound_edit")!!
+
+            binding.roundCourse.setText(golfRound.course)
+            binding.roundDate.setText(golfRound.date)
+
+            binding.hole1.setText(golfRound.scores[0].toString())
+            binding.hole2.setText(golfRound.scores[1].toString())
+            binding.hole3.setText(golfRound.scores[2].toString())
+            binding.hole4.setText(golfRound.scores[3].toString())
+            binding.hole5.setText(golfRound.scores[4].toString())
+            binding.hole6.setText(golfRound.scores[5].toString())
+            binding.hole7.setText(golfRound.scores[6].toString())
+            binding.hole8.setText(golfRound.scores[7].toString())
+            binding.hole9.setText(golfRound.scores[8].toString())
+            binding.hole10.setText(golfRound.scores[9].toString())
+            binding.hole11.setText(golfRound.scores[10].toString())
+            binding.hole12.setText(golfRound.scores[11].toString())
+            binding.hole13.setText(golfRound.scores[12].toString())
+            binding.hole14.setText(golfRound.scores[13].toString())
+            binding.hole15.setText(golfRound.scores[14].toString())
+            binding.hole16.setText(golfRound.scores[15].toString())
+            binding.hole17.setText(golfRound.scores[16].toString())
+            binding.hole18.setText(golfRound.scores[17].toString())
+
+            binding.btnAdd.setText(R.string.save_round)
+        }
 
         binding.roundDate.setOnClickListener() {
             DatePickerDialog(this@GolfRoundActivity,
@@ -63,7 +96,11 @@ class GolfRoundActivity : AppCompatActivity() {
             golfRound.scores[16] = binding.hole17.text.toString().toInt()
             golfRound.scores[17] = binding.hole18.text.toString().toInt()
 
-            app.golfRounds.create(golfRound.copy())
+            if (edit) {
+               app.golfRounds.update(golfRound.copy())
+            } else {
+                app.golfRounds.create(golfRound.copy())
+            }
             setResult(RESULT_OK)
             finish()
         }
@@ -81,6 +118,20 @@ class GolfRoundActivity : AppCompatActivity() {
             val myFormat = (dayOfMonth.toString() + "/" + updatedMonth.toString() + "/" + year.toString())
             binding.roundDate.setText(myFormat)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_golfround, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

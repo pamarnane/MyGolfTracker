@@ -15,14 +15,14 @@
         android:theme="@style/Theme.MyGolfTracker"
         tools:targetApi="31">
         <activity
-            android:name=".activites.GolfRoundActivity"
+            android:name=".activities.GolfRoundActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activites.GolfRoundListActivity"
+            android:name=".activities.GolfRoundListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

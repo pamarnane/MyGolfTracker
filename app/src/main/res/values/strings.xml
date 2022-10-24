@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">MyGolfTracker</string>
     <string name="menu_addRound">Add Round</string>
+    <string name="menu_cancelRound">Cancel</string>
     <string name="button_addRound">Add Round</string>
+    <string name="save_round">Save Round</string>
     <string name="hint_courseName">Enter Course</string>
     <string name="hint_date">Enter Date</string>
     <string name="hint_hole1">Hole 1</string>

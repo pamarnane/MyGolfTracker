@@ -41,12 +41,15 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     }
 
     override fun update(golfRound: GolfRoundModel) {
-/*        var foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
+        var foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
         if (foundGolfRound != null) {
             foundGolfRound.course = golfRound.course
             foundGolfRound.date = golfRound.date
+            for (i in golfRound.scores.indices) {
+                foundGolfRound.scores[i] = golfRound.scores[i]
+            }
             logAll()
-        }*/
+        }
     }
 
     private fun serialize() {

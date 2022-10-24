@@ -1,4 +1,4 @@
-package org.wit.mygolftracker.activites
+package org.wit.mygolftracker.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +14,7 @@ import org.wit.mygolftracker.adapters.GolfTrackerListener
 import org.wit.mygolftracker.databinding.ActivityGolfRoundListBinding
 import org.wit.mygolftracker.main.MainApp
 import org.wit.mygolftracker.models.GolfRoundModel
+import timber.log.Timber.i
 
 class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
 
@@ -59,6 +60,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
     override fun onGolfRoundClick(golfRound: GolfRoundModel) {
         val launcherIntent = Intent(this, GolfRoundActivity::class.java)
         launcherIntent.putExtra("golfRound_edit", golfRound)
+        i("Click for update")
         startActivityForResult(launcherIntent,0)
     }
 
