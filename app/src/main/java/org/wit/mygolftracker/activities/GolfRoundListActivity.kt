@@ -13,7 +13,7 @@ import org.wit.mygolftracker.adapters.GolfTrackerAdapter
 import org.wit.mygolftracker.adapters.GolfTrackerListener
 import org.wit.mygolftracker.databinding.ActivityGolfRoundListBinding
 import org.wit.mygolftracker.main.MainApp
-import org.wit.mygolftracker.models.GolfCourseLocation
+import org.wit.mygolftracker.models.GolfCourseModel
 import org.wit.mygolftracker.models.GolfRoundModel
 import timber.log.Timber.i
 
@@ -24,7 +24,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
-    var location = GolfCourseLocation(52.245696, -7.139102, 15f)
+    //var location = GolfCourseModel(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

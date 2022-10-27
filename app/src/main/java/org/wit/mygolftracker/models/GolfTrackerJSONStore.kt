@@ -6,15 +6,16 @@ import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import org.wit.mygolftracker.helpers.*
 import timber.log.Timber
-import timber.log.Timber.i
 import java.lang.reflect.Type
 import java.util.*
 
-const val JSON_FILE = "mygolftracker.json"
+const val ROUND_JSON_FILE = "mygolftracker.json"
+const val COURSE_JSON_FILE = "mygolftrackercourses.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, UriParser())
     .create()
 val listType: Type = object : TypeToken<ArrayList<GolfRoundModel>>() {}.type
+val listRoundType: Type = object : TypeToken<ArrayList<GolfCourseModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
@@ -22,9 +23,10 @@ fun generateRandomId(): Long {
 
 class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     var golfRounds = mutableListOf<GolfRoundModel>()
+    var golfCourses = mutableListOf<GolfCourseModel>()
 
     init {
-        if (exists(context, JSON_FILE)) {
+        if (exists(context, ROUND_JSON_FILE)) {
             deserialize()
         }
     }
@@ -34,6 +36,7 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         return golfRounds
     }
 
+
     override fun create(golfRound: GolfRoundModel) {
         golfRound.id = generateRandomId()
         golfRounds.add(golfRound)
@@ -41,7 +44,7 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     }
 
     override fun update(golfRound: GolfRoundModel) {
-        var foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
+        val foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
         if (foundGolfRound != null) {
             foundGolfRound.course = golfRound.course
             foundGolfRound.date = golfRound.date
@@ -53,28 +56,47 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     }
 
     override fun delete(golfRound: GolfRoundModel) {
-        var foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
+        val foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
         if (foundGolfRound != null) {
             golfRounds.remove(foundGolfRound)
             logAll()
         }
     }
 
-    private fun serialize() {
-        val jsonString = gsonBuilder.toJson(golfRounds, listType)
-        write(context, JSON_FILE, jsonString)
-    }
-
-    private fun deserialize() {
-        val jsonString = read(context, JSON_FILE)
-        golfRounds = gsonBuilder.fromJson(jsonString, listType)
-    }
-
-
     private fun logAll() {
         golfRounds.forEach { Timber.i("$it") }
     }
+
+
+
+    // Course model functions
+    override fun createCourse(golfCourse: GolfCourseModel) {
+        golfCourse.id = generateRandomId()
+        golfCourses.add(golfCourse)
+        serializeCourse()
+    }
+
+    override fun findAllCourses(): MutableList<GolfCourseModel> {
+        return golfCourses
+    }
+
+    private fun serialize() {
+        val jsonString = gsonBuilder.toJson(golfRounds, listType)
+        write(context, ROUND_JSON_FILE, jsonString)
+    }
+
+    private fun serializeCourse() {
+        val jsonString = gsonBuilder.toJson(golfCourses, listRoundType)
+        write(context, COURSE_JSON_FILE, jsonString)
+    }
+
+    private fun deserialize() {
+        val jsonString = read(context, ROUND_JSON_FILE)
+        golfRounds = gsonBuilder.fromJson(jsonString, listType)
+    }
+
 }
+
 
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
     override fun deserialize(

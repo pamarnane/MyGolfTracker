@@ -5,4 +5,7 @@ interface GolfTrackerStore {
     fun create(golfRound: GolfRoundModel)
     fun update(golfRound: GolfRoundModel)
     fun delete(golfRound: GolfRoundModel)
+
+    fun createCourse(golfCourse: GolfCourseModel)
+    fun findAllCourses(): List<GolfCourseModel>
 }
