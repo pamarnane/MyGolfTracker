@@ -130,6 +130,10 @@ class GolfRoundActivity : AppCompatActivity() {
             R.id.item_cancel -> {
                 finish()
             }
+            R.id.item_delete -> {
+                app.golfRounds.delete(golfRound)
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

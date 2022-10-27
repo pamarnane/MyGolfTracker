@@ -52,6 +52,14 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         }
     }
 
+    override fun delete(golfRound: GolfRoundModel) {
+        var foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
+        if (foundGolfRound != null) {
+            golfRounds.remove(foundGolfRound)
+            logAll()
+        }
+    }
+
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(golfRounds, listType)
         write(context, JSON_FILE, jsonString)

@@ -13,6 +13,7 @@ import org.wit.mygolftracker.adapters.GolfTrackerAdapter
 import org.wit.mygolftracker.adapters.GolfTrackerListener
 import org.wit.mygolftracker.databinding.ActivityGolfRoundListBinding
 import org.wit.mygolftracker.main.MainApp
+import org.wit.mygolftracker.models.GolfCourseLocation
 import org.wit.mygolftracker.models.GolfRoundModel
 import timber.log.Timber.i
 
@@ -21,6 +22,9 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
     lateinit var app: MainApp
     private lateinit var binding: ActivityGolfRoundListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+
+    var location = GolfCourseLocation(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,8 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
 
         registerRefreshCallback()
 
+        registerMapCallback()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +59,13 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
                 val launcherIntent = Intent(this, GolfRoundActivity::class.java)
                 startActivityForResult(launcherIntent,0)
             }
+            R.id.item_map -> {val launcherIntent = Intent(this, MapsActivity::class.java)
+                //.putExtra("location", location)
+                //startActivityForResult(launcherIntent,0)
+                mapIntentLauncher.launch(launcherIntent)
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -82,5 +94,27 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { loadGolfRounds() }
+    }
+
+/*    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            location = result.data!!.extras?.getParcelable("location")!!
+                            i("Location == $location")
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }*/
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { i("Map Loaded") }
     }
 }
