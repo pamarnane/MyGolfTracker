@@ -29,6 +29,9 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         if (exists(context, ROUND_JSON_FILE)) {
             deserialize()
         }
+        if (exists(context, COURSE_JSON_FILE)) {
+            deserializeCourses()
+        }
     }
 
     override fun findAll(): MutableList<GolfRoundModel> {
@@ -51,6 +54,7 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
             for (i in golfRound.scores.indices) {
                 foundGolfRound.scores[i] = golfRound.scores[i]
             }
+            serialize()
             logAll()
         }
     }
@@ -68,8 +72,9 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     }
 
 
-
+    // *****************************************************
     // Course model functions
+    // *****************************************************
     override fun createCourse(golfCourse: GolfCourseModel) {
         golfCourse.id = generateRandomId()
         golfCourses.add(golfCourse)
@@ -77,7 +82,20 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     }
 
     override fun findAllCourses(): MutableList<GolfCourseModel> {
+        logAllCourses()
         return golfCourses
+    }
+
+    private fun logAllCourses() {
+        golfCourses.forEach { Timber.i("Course: " +"$it") }
+    }
+
+    override fun updateCourseRoundsPlayed(golfCourse: GolfCourseModel) {
+        val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.id == golfCourse.id }
+        if (foundGolfCourse != null) {
+            foundGolfCourse.roundsPlayed = foundGolfCourse.roundsPlayed + 1
+            serializeCourse()
+        }
     }
 
     private fun serialize() {
@@ -93,6 +111,11 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
     private fun deserialize() {
         val jsonString = read(context, ROUND_JSON_FILE)
         golfRounds = gsonBuilder.fromJson(jsonString, listType)
+    }
+
+    private fun deserializeCourses() {
+        val jsonString = read(context, COURSE_JSON_FILE)
+        golfCourses = gsonBuilder.fromJson(jsonString, listRoundType)
     }
 
 }

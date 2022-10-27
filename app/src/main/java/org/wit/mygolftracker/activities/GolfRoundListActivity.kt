@@ -23,6 +23,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
     private lateinit var binding: ActivityGolfRoundListBinding
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var golfCourses = mutableListOf<GolfCourseModel>()
 
     //var location = GolfCourseModel(52.245696, -7.139102, 15f)
 
@@ -41,6 +42,8 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         binding.recyclerView.layoutManager = layoutManager
         loadGolfRounds()
         //binding.recyclerView.adapter = GolfTrackerAdapter(app.golfRounds.findAll(),this)
+        golfCourses = app.golfRounds.findAllCourses() as MutableList<GolfCourseModel>
+
 
         registerRefreshCallback()
 
@@ -59,9 +62,12 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
                 val launcherIntent = Intent(this, GolfRoundActivity::class.java)
                 startActivityForResult(launcherIntent,0)
             }
-            R.id.item_map -> {val launcherIntent = Intent(this, MapsActivity::class.java)
+            R.id.item_map -> {
+                golfCourses = app.golfRounds.findAllCourses() as MutableList<GolfCourseModel>
+                val launcherIntent = Intent(this, MapsActivity::class.java)
                 //.putExtra("location", location)
                 //startActivityForResult(launcherIntent,0)
+
                 mapIntentLauncher.launch(launcherIntent)
             }
         }

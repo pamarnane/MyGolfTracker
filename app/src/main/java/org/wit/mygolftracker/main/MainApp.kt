@@ -22,9 +22,15 @@ class MainApp : Application() {
 
 /*        var golfCourse = GolfCourseModel()
 
-        golfCourse.title = "Dromoland Castle GC"
+        golfCourse.title = "Ennis GC"
+        golfCourse.lat = 52.84092016654442
+        golfCourse.lng = -8.998135028815737
+        golfCourses.createCourse(golfCourse.copy())
 
-        golfCourses.createCourse(golfCourse)*/
+        golfCourse.title = "Dromoland Castle GC"
+        golfCourse.lat = 52.78218837292427
+        golfCourse.lng = -8.909143400919719
+        golfCourses.createCourse(golfCourse.copy())*/
 
     }
 }

@@ -1,20 +1,25 @@
 package org.wit.mygolftracker.activities
 
 import android.app.DatePickerDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.ListView
+import androidx.appcompat.app.AppCompatActivity
 import org.wit.mygolftracker.R
 import org.wit.mygolftracker.databinding.ActivityGolfRoundBinding
 import org.wit.mygolftracker.main.MainApp
+import org.wit.mygolftracker.models.GolfCourseModel
 import org.wit.mygolftracker.models.GolfRoundModel
 import timber.log.Timber.i
 import java.util.*
 
 
-class GolfRoundActivity : AppCompatActivity() {
+class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityGolfRoundBinding
     var golfRound = GolfRoundModel()
@@ -34,6 +39,21 @@ class GolfRoundActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
+
+        val golfCourses = app.golfRounds.findAllCourses()
+        val golfCourseList = mutableListOf<String>()
+        golfCourses.forEach { it ->
+            golfCourseList.add(it.title)
+        }
+
+        val arrayAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_list_item_1, golfCourseList
+        )
+        binding.spinner.adapter = arrayAdapter
+        binding.spinner.onItemSelectedListener = this
+
+
 
         if(intent.hasExtra("golfRound_edit")){
             i("Data passed for edit")
@@ -75,7 +95,7 @@ class GolfRoundActivity : AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener() {
-            golfRound.course = binding.roundCourse.text.toString()
+            //golfRound.course = binding.roundCourse.text.toString()
             golfRound.date = binding.roundDate.text.toString()
             golfRound.scores[0] = binding.hole1.text.toString().toInt()
             golfRound.scores[1] = binding.hole2.text.toString().toInt()
@@ -96,10 +116,15 @@ class GolfRoundActivity : AppCompatActivity() {
             golfRound.scores[16] = binding.hole17.text.toString().toInt()
             golfRound.scores[17] = binding.hole18.text.toString().toInt()
 
+
             if (edit) {
                app.golfRounds.update(golfRound.copy())
             } else {
                 app.golfRounds.create(golfRound.copy())
+                val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfRound.course }
+                if (foundGolfCourse != null) {
+                    app.golfCourses.updateCourseRoundsPlayed(foundGolfCourse)
+                }
             }
             setResult(RESULT_OK)
             finish()
@@ -136,6 +161,15 @@ class GolfRoundActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        var text: String = parent?.getItemAtPosition(position).toString()
+        golfRound.course = text
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 
 
