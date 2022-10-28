@@ -12,21 +12,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/accent_green"
-            android:fitsSystemWindows="true"
-            app:elevation="0dip"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:titleTextColor="@color/white" />
-        </com.google.android.material.appbar.AppBarLayout>-->
 
         <ScrollView
             android:layout_width="match_parent"
@@ -38,30 +23,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
 
-<!--                <EditText
-                    android:id="@+id/roundCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_margin="8dp"
-                    android:autofillHints=""
-                    android:hint="@string/hint_courseName"
-                    android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
-                    android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/hint_courseName"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerCourse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="82dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="left|center_vertical"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="10dp"
+                    android:text="@string/hint_date"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/roundDate"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_margin="8dp"
                     android:hint="@string/hint_date"
                     android:inputType="date"
@@ -69,240 +75,545 @@
                     android:maxLines="1"
                     android:minHeight="48dp"
                     android:padding="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole1"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole1"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
 
-                    <EditText
-                        android:id="@+id/hole10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole10"
-                        android:inputType="number" />
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
-                    <EditText
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole2"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole2"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole3"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole3"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole3"
-                        android:inputType="number" />
-            </LinearLayout>
+                        android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole4"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole4"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole4"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole5"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole5"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole5"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole6"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole6"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole6"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole7"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole7"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole7"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <View
+                    android:id="@+id/divider8"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole8"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole8"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole8"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole9"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole9"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole9"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <View
+                    android:id="@+id/divider10"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
-                    <EditText
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole10"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
+                        android:id="@+id/hole10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider11"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole11"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole11"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole11"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider12"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole12"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole12"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole12"
-                        android:inputType="number" />
-            </LinearLayout>
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+                <View
+                    android:id="@+id/divider13"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
-                    <EditText
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole13"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole13"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole13"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider14"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole14"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole14"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole14"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <View
+                    android:id="@+id/divider15"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
 
-                    <EditText
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole15"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole15"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole15"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider16"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole16"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole16"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole16"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
 
-            </LinearLayout>
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center">
+                <View
+                    android:id="@+id/divider17"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
 
-                    <EditText
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole17"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole17"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole17"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-                    <EditText
+                <View
+                    android:id="@+id/divider18"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="left|center_vertical"
+                        android:includeFontPadding="false"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/hint_hole18"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <NumberPicker
                         android:id="@+id/hole18"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/hint_hole18"
-                        android:inputType="number" />
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-            </LinearLayout>
-
-                    <Button
+                <Button
                         android:id="@+id/btnAdd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="16dp"
-                        android:background="@color/purple_200"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
                         android:stateListAnimator="@null"
                         android:text="@string/button_addRound"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="16sp" />
 
 
@@ -313,6 +624,7 @@
 
 
         </ScrollView>
+
     </RelativeLayout>
 
 

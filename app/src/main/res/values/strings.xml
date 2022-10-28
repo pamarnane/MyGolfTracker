@@ -6,8 +6,8 @@
     <string name="menu_deleteRound">Delete</string>
     <string name="button_addRound">Add Round</string>
     <string name="save_round">Save Round</string>
-    <string name="hint_courseName">Enter Course</string>
-    <string name="hint_date">Enter Date</string>
+    <string name="hint_courseName">Course Played</string>
+    <string name="hint_date">Date Played</string>
     <string name="hint_hole1">Hole 1</string>
     <string name="hint_hole2">Hole 2</string>
     <string name="hint_hole3">Hole 3</string>
