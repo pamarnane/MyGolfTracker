@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import org.wit.mygolftracker.R
 import org.wit.mygolftracker.databinding.ActivityGolfRoundBinding
@@ -31,7 +30,6 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityGolfRoundBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,22 +43,21 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         golfCourses.forEach { it ->
             golfCourseList.add(it.title)
         }
+        golfCourseList.sort()
 
         val arrayAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1, golfCourseList
         )
-        binding.spinner.adapter = arrayAdapter
-        binding.spinner.onItemSelectedListener = this
-
-
+        binding.spinnerCourse.adapter = arrayAdapter
+        binding.spinnerCourse.onItemSelectedListener = this
 
         if(intent.hasExtra("golfRound_edit")){
             i("Data passed for edit")
             edit = true
             golfRound = intent.extras?.getParcelable("golfRound_edit")!!
 
-            binding.roundCourse.setText(golfRound.course)
+            //binding.roundCourse.setText(golfRound.course)
             binding.roundDate.setText(golfRound.date)
 
             binding.hole1.setText(golfRound.scores[0].toString())
@@ -116,14 +113,13 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             golfRound.scores[16] = binding.hole17.text.toString().toInt()
             golfRound.scores[17] = binding.hole18.text.toString().toInt()
 
-
             if (edit) {
                app.golfRounds.update(golfRound.copy())
             } else {
                 app.golfRounds.create(golfRound.copy())
                 val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfRound.course }
                 if (foundGolfCourse != null) {
-                    app.golfCourses.updateCourseRoundsPlayed(foundGolfCourse)
+                    app.golfCourses.incCourseRoundsPlayed(foundGolfCourse)
                 }
             }
             setResult(RESULT_OK)
@@ -157,6 +153,12 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             }
             R.id.item_delete -> {
                 app.golfRounds.delete(golfRound)
+
+                val golfCourses = listOf<GolfCourseModel>()
+                val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfRound.course }
+                if (foundGolfCourse != null) {
+                    app.golfCourses.decCourseRoundsPlayed(foundGolfCourse)
+                }
                 finish()
             }
         }
@@ -171,6 +173,5 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")
     }
-
 
 }

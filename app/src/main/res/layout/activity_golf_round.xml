@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <EditText
+<!--                <EditText
                     android:id="@+id/roundCourse"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -51,14 +51,14 @@
                     android:maxLines="1"
                     android:padding="8dp"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp" />-->
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/spinnerCourse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <EditText
+                <TextView
                     android:id="@+id/roundDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

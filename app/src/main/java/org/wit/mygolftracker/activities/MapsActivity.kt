@@ -8,21 +8,30 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.mygolftracker.R
 //import org.wit.mygolftracker.activities.databinding.ActivityMapsBinding
 import org.wit.mygolftracker.databinding.ActivityMapsBinding
+import org.wit.mygolftracker.main.MainApp
+import org.wit.mygolftracker.models.GolfCourseModel
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    lateinit var app: MainApp
+    val golfCourseLocations = mutableListOf<LatLng>()
+    var golfCourses = listOf<GolfCourseModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        app = application as MainApp
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -41,10 +50,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.clear()
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        golfCourses = app.golfRounds.findAllCourses()
+        //val golfCourseLocations = mutableListOf<LatLng>()
+        golfCourses.forEach { it ->
+            val newLatLng = LatLng(it.lat, it.lng)
+            golfCourseLocations.add(newLatLng)
+        }
+
+        // Add a marker for each golf course user has played
+        if (golfCourses.size > 0) {
+            golfCourses.forEach { it ->
+                if (it.roundsPlayed > 0) {
+                val loc = LatLng(it.lat, it.lng)
+                mMap.addMarker(
+                    MarkerOptions().position(loc).title("${it.title}")
+                        .snippet("Rounds played: ${it.roundsPlayed}")
+                )
+                }
+            }
+
+            val cameraMove = LatLng(golfCourses[0].lat, golfCourses[0].lng)
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(golfCourseLocations[0]))
+        }
     }
 }

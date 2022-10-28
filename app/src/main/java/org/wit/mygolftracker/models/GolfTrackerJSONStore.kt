@@ -63,6 +63,7 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         val foundGolfRound: GolfRoundModel? = golfRounds.find { p -> p.id == golfRound.id }
         if (foundGolfRound != null) {
             golfRounds.remove(foundGolfRound)
+            serialize()
             logAll()
         }
     }
@@ -83,6 +84,7 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
 
     override fun findAllCourses(): MutableList<GolfCourseModel> {
         logAllCourses()
+        deserializeCourses()
         return golfCourses
     }
 
@@ -90,10 +92,18 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         golfCourses.forEach { Timber.i("Course: " +"$it") }
     }
 
-    override fun updateCourseRoundsPlayed(golfCourse: GolfCourseModel) {
+    override fun incCourseRoundsPlayed(golfCourse: GolfCourseModel) {
         val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.id == golfCourse.id }
         if (foundGolfCourse != null) {
-            foundGolfCourse.roundsPlayed = foundGolfCourse.roundsPlayed + 1
+            foundGolfCourse.roundsPlayed += 1
+            serializeCourse()
+        }
+    }
+
+    override fun decCourseRoundsPlayed(golfCourse: GolfCourseModel) {
+        val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.id == golfCourse.id }
+        if (foundGolfCourse != null) {
+            foundGolfCourse.roundsPlayed -= 1
             serializeCourse()
         }
     }
