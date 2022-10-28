@@ -57,7 +57,9 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             edit = true
             golfRound = intent.extras?.getParcelable("golfRound_edit")!!
 
-            //binding.roundCourse.setText(golfRound.course)
+            //val golfCourseInt = golfCourseList.indexOf(golfRound.course)
+
+            binding.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
             binding.roundDate.setText(golfRound.date)
 
             binding.hole1.setText(golfRound.scores[0].toString())

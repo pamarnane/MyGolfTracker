@@ -7,6 +7,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -64,16 +65,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             golfCourses.forEach { it ->
                 if (it.roundsPlayed > 0) {
                 val loc = LatLng(it.lat, it.lng)
+                    //val icon = R.drawable.${it.icon}
                 mMap.addMarker(
                     MarkerOptions().position(loc).title("${it.title}")
                         .snippet("Rounds played: ${it.roundsPlayed}")
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.golf))
+                        .flat(true)
+
                 )
                 }
             }
 
             val cameraMove = LatLng(golfCourses[0].lat, golfCourses[0].lng)
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(golfCourseLocations[0]))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(golfCourseLocations[0], 10f))
         }
     }
 }

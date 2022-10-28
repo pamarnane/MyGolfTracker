@@ -20,16 +20,18 @@ class MainApp : Application() {
         golfCourses = GolfTrackerJSONStore(applicationContext)
         i("MyGolfTracker started")
 
-/*        var golfCourse = GolfCourseModel()
+/*       var golfCourse = GolfCourseModel()
 
         golfCourse.title = "Ennis GC"
         golfCourse.lat = 52.84092016654442
         golfCourse.lng = -8.998135028815737
+        golfCourse.icon = "ennis"
         golfCourses.createCourse(golfCourse.copy())
 
         golfCourse.title = "Dromoland Castle GC"
         golfCourse.lat = 52.78218837292427
         golfCourse.lng = -8.909143400919719
+        golfCourse.icon = "dromoland"
         golfCourses.createCourse(golfCourse.copy())*/
 
     }
