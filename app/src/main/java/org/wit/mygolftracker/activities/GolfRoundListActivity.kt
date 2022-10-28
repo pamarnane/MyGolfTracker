@@ -33,8 +33,8 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         binding = ActivityGolfRoundListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
+/*        binding.toolbar.title = title
+        setSupportActionBar(binding.toolbar)*/
 
         app = application as MainApp
 
