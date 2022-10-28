@@ -152,13 +152,10 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 finish()
             }
             R.id.item_delete -> {
+                val golfCourseName = golfRound.course
                 app.golfRounds.delete(golfRound)
+                app.golfCourses.decCourseRoundsPlayed(golfCourseName)
 
-                val golfCourses = listOf<GolfCourseModel>()
-                val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfRound.course }
-                if (foundGolfCourse != null) {
-                    app.golfCourses.decCourseRoundsPlayed(foundGolfCourse)
-                }
                 finish()
             }
         }

@@ -100,8 +100,8 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         }
     }
 
-    override fun decCourseRoundsPlayed(golfCourse: GolfCourseModel) {
-        val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.id == golfCourse.id }
+    override fun decCourseRoundsPlayed(golfCourseName: String) {
+        val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfCourseName }
         if (foundGolfCourse != null) {
             foundGolfCourse.roundsPlayed -= 1
             serializeCourse()

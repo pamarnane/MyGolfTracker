@@ -8,7 +8,7 @@ interface GolfTrackerStore {
 
     fun createCourse(golfCourse: GolfCourseModel)
     fun incCourseRoundsPlayed(golfCourse: GolfCourseModel)
-    fun decCourseRoundsPlayed(golfCourse: GolfCourseModel)
+    fun decCourseRoundsPlayed(golfCourseName: String)
     fun findAllCourses(): List<GolfCourseModel>
 
 }
