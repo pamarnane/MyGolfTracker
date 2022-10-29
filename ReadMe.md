@@ -21,3 +21,6 @@ The rounds recorded are listed when the user opens the application. From this li
 
 ### Image Gallery
 - https://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the
+
+### Splash Screen
+- https://www.geeksforgeeks.org/how-to-create-a-splash-screen-in-android-using-kotlin/
