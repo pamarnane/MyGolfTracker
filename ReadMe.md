@@ -24,3 +24,9 @@ The rounds recorded are listed when the user opens the application. From this li
 
 ### Splash Screen
 - https://www.geeksforgeeks.org/how-to-create-a-splash-screen-in-android-using-kotlin/
+
+### Image Gallery Search/Filter
+- https://developer.android.com/reference/kotlin/android/widget/SearchView#getquery
+- https://www.geeksforgeeks.org/searchview-in-android-with-kotlin/
+- https://www.geeksforgeeks.org/android-searchview-with-recyclerview-using-kotlin/
+- https://www.tutorialspoint.com/how-to-use-searchview-in-android-kotlin
