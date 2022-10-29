@@ -615,18 +615,7 @@
                         android:text="@string/button_addRound"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
-
-
-
-
-
             </LinearLayout>
-
-
         </ScrollView>
-
     </RelativeLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

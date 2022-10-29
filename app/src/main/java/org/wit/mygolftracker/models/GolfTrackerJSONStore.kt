@@ -39,6 +39,17 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         return golfRounds
     }
 
+    override fun findAllwImages(): MutableList<GolfRoundModel> {
+        var golfRoundswImages = mutableListOf<GolfRoundModel>()
+        golfRounds.forEach {
+            if (it.image != Uri.EMPTY) {
+                golfRoundswImages.add(it)
+            }
+        }
+        logAll()
+        return golfRoundswImages
+    }
+
 
     override fun create(golfRound: GolfRoundModel) {
         golfRound.id = generateRandomId()
@@ -51,6 +62,7 @@ class GolfTrackerJSONStore(private val context: Context) : GolfTrackerStore {
         if (foundGolfRound != null) {
             foundGolfRound.course = golfRound.course
             foundGolfRound.date = golfRound.date
+            foundGolfRound.image = golfRound.image
             for (i in golfRound.scores.indices) {
                 foundGolfRound.scores[i] = golfRound.scores[i]
             }

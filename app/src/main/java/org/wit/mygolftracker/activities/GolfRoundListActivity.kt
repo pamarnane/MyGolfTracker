@@ -64,12 +64,15 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
                 val launcherIntent = Intent(this, MapsActivity::class.java)
                 //TODO("Try and send locations via putExtra")
 
-                    .putParcelableArrayListExtra("courses", golfCourses)
-                //.putExtra("location", location)
-                //startActivityForResult(launcherIntent,0)
-
+                // .putParcelableArrayListExtra("courses", golfCourses)
                 mapIntentLauncher.launch(launcherIntent)
             }
+            R.id.item_openGallery -> {
+            val launcherIntent = Intent(this, ImageGallery::class.java)
+            //launcherIntent.putExtra("golfRound_edit", golfRound)
+            i("Click for image gallery")
+            startActivityForResult(launcherIntent,0)
+        }
         }
 
         return super.onOptionsItemSelected(item)

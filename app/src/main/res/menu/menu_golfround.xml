@@ -11,5 +11,10 @@
         android:textColor="#000"
         android:title="@string/menu_cancelRound"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/item_addImage"
+        android:textColor="#000"
+        android:title="@string/menu_addImage"
+        app:showAsAction="never" />
 
 </menu>

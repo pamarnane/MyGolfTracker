@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyGolfTracker</string>
     <string name="menu_addRound">Add Round</string>
-    <string name="menu_showMap">Show Courses</string>
+    <string name="menu_showMap">Show Courses Map</string>
     <string name="menu_cancelRound">Cancel</string>
     <string name="menu_deleteRound">Delete</string>
     <string name="button_addRound">Add Round</string>
@@ -27,4 +27,9 @@
     <string name="hint_hole17">Hole 17</string>
     <string name="hint_hole18">Hole 18</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="select_round_image">Add Round from Round</string>
+    <string name="menu_addImage">Add Round Image</string>
+    <string name="menu_openGallery">Open Image Gallery</string>
+    <string name="enter_course_name">Course name must be entered</string>
+    <string name="enter_course_date">Date played must be entered</string>
 </resources>

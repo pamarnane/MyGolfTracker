@@ -1,6 +1,7 @@
 package org.wit.mygolftracker.activities
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -8,9 +9,15 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import org.wit.mygolftracker.R
 import org.wit.mygolftracker.databinding.ActivityGolfRoundBinding
+import org.wit.mygolftracker.helpers.showImagePicker
 import org.wit.mygolftracker.main.MainApp
 import org.wit.mygolftracker.models.GolfCourseModel
 import org.wit.mygolftracker.models.GolfRoundModel
@@ -21,6 +28,7 @@ import java.util.*
 class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: ActivityGolfRoundBinding
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     var golfRound = GolfRoundModel()
     lateinit var app: MainApp
     var cal = Calendar.getInstance()
@@ -59,16 +67,8 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             edit = true
             golfRound = intent.extras?.getParcelable("golfRound_edit")!!
 
-            //val golfCourseInt = golfCourseList.indexOf(golfRound.course)
-
             binding.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
             binding.roundDate.setText(golfRound.date)
-
-            binding.hole1.setOnValueChangedListener { _, _, newVal ->
-                //Display the newly selected number to paymentAmount
-                binding.hole1.value = newVal
-            }
-
 
             binding.hole1.value = golfRound.scores[0]
             binding.hole2.value = golfRound.scores[1]
@@ -125,18 +125,34 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
             golfRound.scores[17] = binding.hole18.value
 
 
-            if (edit) {
+            var validInput = false;
+
+            if(golfRound.course ==  ""){
+                Snackbar.make(it,R.string.enter_course_name, Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            else if (golfRound.date ==  "") {
+                    Snackbar.make(it, R.string.enter_course_date, Snackbar.LENGTH_LONG)
+                        .show()
+                }
+            else if (golfRound.course !=  "" && golfRound.date !=  "")  { validInput = true}
+
+            if (edit && validInput)  {
                app.golfRounds.update(golfRound.copy())
-            } else {
+            } else if (validInput) {
                 app.golfRounds.create(golfRound.copy())
                 val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfRound.course }
                 if (foundGolfCourse != null) {
                     app.golfCourses.incCourseRoundsPlayed(foundGolfCourse)
                 }
+                setResult(RESULT_OK)
+                finish()
             }
-            setResult(RESULT_OK)
-            finish()
+
         }
+
+        // Callback declarations
+        registerImagePickerCallback()
     }
 
     // create an OnDateSetListener
@@ -209,8 +225,31 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
                 finish()
             }
+            R.id.item_addImage -> {
+                showImagePicker(imageIntentLauncher)
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            golfRound.image = result.data!!.data!!
+                            app.golfRounds.update(golfRound)
+   /*                         Picasso.get()
+                                .load(golfRound.image)
+                                .into(binding.golfRound)*/
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
