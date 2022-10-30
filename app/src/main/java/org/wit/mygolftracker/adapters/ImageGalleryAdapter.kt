@@ -37,10 +37,6 @@ class ImageGalleryAdapter constructor(private var golfRounds: List<GolfRoundMode
             Picasso.get()
                 .load(golfRound.image)
                 .into(binding.imageView)
-
-   /*         binding.roundDate.text = golfRound.date
-            binding.totalScore.text = golfRound.scores.sum().toString()
-            binding.root.setOnClickListener { listener.onGolfRoundClick(golfRound) }*/
         }
     }
 }

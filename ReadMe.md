@@ -1,10 +1,12 @@
 # MyGolfTracker
 
 ## Application Description:
-MyGolfTracker is an Android application that allows a user to record their scores. Users add the course that they played at as well as date of the round.
+MyGolfTracker is an Android application that allows a user to record their scores. Users select the course that they played at as well as date of the round.
 An option to add an image per round is available.
 
 The rounds recorded are listed when the user opens the application. From this list view, users can open a map to see the locations that they have rounds stored and they can also open an image gallery to see the images they have stored.
+
+Courses that are available for the user to select are seeded on application startup if required.
 
 ## TODO List:
 - [ ] Use dialog box for round score entry

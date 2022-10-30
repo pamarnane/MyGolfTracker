@@ -25,16 +25,11 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var golfCourses = ArrayList<GolfCourseModel>()
 
-    //var location = GolfCourseModel(52.245696, -7.139102, 15f)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityGolfRoundListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-/*        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)*/
 
         app = application as MainApp
 
@@ -43,9 +38,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
         loadGolfRounds()
 
         registerRefreshCallback()
-
         registerMapCallback()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,7 +53,6 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
                 startActivityForResult(launcherIntent,0)
             }
             R.id.item_map -> {
-                //golfCourses = app.golfRounds.findAllCourses() as MutableList<GolfCourseModel>
                 val launcherIntent = Intent(this, MapsActivity::class.java)
                 //TODO("Try and send locations via putExtra")
 
@@ -69,7 +61,7 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
             }
             R.id.item_openGallery -> {
             val launcherIntent = Intent(this, ImageGallery::class.java)
-            //launcherIntent.putExtra("golfRound_edit", golfRound)
+
             i("Click for image gallery")
             startActivityForResult(launcherIntent,0)
         }
@@ -105,22 +97,6 @@ class GolfRoundListActivity : AppCompatActivity(), GolfTrackerListener {
             { loadGolfRounds() }
     }
 
-/*    private fun registerMapCallback() {
-        mapIntentLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result ->
-                when (result.resultCode) {
-                    RESULT_OK -> {
-                        if (result.data != null) {
-                            i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
-                            i("Location == $location")
-                        } // end of if
-                    }
-                    RESULT_CANCELED -> { } else -> { }
-                }
-            }
-    }*/
     private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())

@@ -41,9 +41,6 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         binding = ActivityGolfRoundBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-/*        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)*/
-
         app = application as MainApp
 
         setNumberPickersMinMax()
@@ -103,7 +100,6 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         }
 
         binding.btnAdd.setOnClickListener() {
-            //golfRound.course = binding.roundCourse.text.toString()
             golfRound.date = binding.roundDate.text.toString()
             golfRound.scores[0] = binding.hole1.value
             golfRound.scores[1] = binding.hole2.value
@@ -139,6 +135,8 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
             if (edit && validInput)  {
                app.golfRounds.update(golfRound.copy())
+                setResult(RESULT_OK)
+                finish()
             } else if (validInput) {
                 app.golfRounds.create(golfRound.copy())
                 val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfRound.course }
@@ -148,7 +146,6 @@ class GolfRoundActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
                 setResult(RESULT_OK)
                 finish()
             }
-
         }
 
         // Callback declarations
