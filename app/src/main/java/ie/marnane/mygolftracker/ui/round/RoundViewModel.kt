@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ie.marnane.mygolftracker.models.GolfRoundModel
+import ie.marnane.mygolftracker.models.GolfTrackerJSONStore
 import ie.marnane.mygolftracker.models.GolfTrackerManager
+import ie.marnane.mygolftracker.models.GolfTrackerStore
 
 class RoundViewModel : ViewModel() {
 

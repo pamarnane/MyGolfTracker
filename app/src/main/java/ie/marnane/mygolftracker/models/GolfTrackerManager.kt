@@ -15,6 +15,7 @@ object GolfTrackerManager : GolfTrackerStore {
 
     override fun create(golfRound: GolfRoundModel) {
         golfRounds.add(golfRound)
+
     }
 
     override fun update(golfRound: GolfRoundModel) {
@@ -27,6 +28,7 @@ object GolfTrackerManager : GolfTrackerStore {
 
     override fun createCourse(golfCourse: GolfCourseModel) {
         golfCourses.add(golfCourse)
+
     }
 
     override fun incCourseRoundsPlayed(golfCourse: GolfCourseModel) {

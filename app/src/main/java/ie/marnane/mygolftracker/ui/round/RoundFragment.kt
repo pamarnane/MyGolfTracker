@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import ie.marnane.mygolftracker.R
 import ie.marnane.mygolftracker.databinding.FragmentRoundBinding
+import ie.marnane.mygolftracker.helpers.showImagePicker
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
 import java.util.*
@@ -91,11 +93,27 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_main, menu)
+                menuInflater.inflate(R.menu.menu_round, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Validate and handle the selected menu item
+/*                when (menuItem.itemId) {
+                    R.id.item_cancel -> {
+                    }
+                    R.id.item_delete -> {
+                        *//*val golfCourseName = golfRound.course
+                        app.golfRounds.delete(golfRound)
+                        app.golfCourses.decCourseRoundsPlayed(golfCourseName)*//*
+                    }
+                    R.id.item_addImage -> {
+                        showImagePicker(imageIntentLauncher)
+                    }
+                }
+                return super.onOptionsItemSelected(item)*/
+
+
+
                 return NavigationUI.onNavDestinationSelected(menuItem,
                     requireView().findNavController())
             }
@@ -160,9 +178,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
     fun setAddButtonListener(layout: FragmentRoundBinding) {
         layout.btnAdd.setOnClickListener{
             println("Add Button Click")
-
             //var golfRound = GolfRoundModel()
-
             //layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
             golfRound.date = layout.roundDate.text.toString()
             golfRound.scores[0] = layout.hole1.value
@@ -200,10 +216,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             if (validInput) {
                 roundViewModel.addGolfRound(golfRound)
             }
-
-            println(GolfTrackerManager.findAll())
-
-
+            findNavController().popBackStack()
         }
     }
 

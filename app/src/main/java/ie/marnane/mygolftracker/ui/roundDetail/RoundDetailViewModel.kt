@@ -8,11 +8,6 @@ import ie.marnane.mygolftracker.models.GolfRoundModel
 
 class RoundDetailViewModel : ViewModel() {
 
-/*    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text*/
-
     private val golfRounds =
         MutableLiveData<List<GolfRoundModel>>()
 
@@ -32,6 +27,15 @@ class RoundDetailViewModel : ViewModel() {
             Timber.i("Report Load Error : $e.message")
         }*/
         golfRounds.value = GolfTrackerManager.findAll()
+    }
+
+    fun delete(golfRound: GolfRoundModel) {
+        /*val foundGolfRound: GolfRoundModel? = GolfTrackerManager { p -> p.id == golfRound.id }
+        if (foundGolfRound != null) {
+            golfRounds.remove(foundGolfRound)
+            serialize()
+            logAll()
+        }*/
     }
 
     /*fun delete(userid: String, id: String) {

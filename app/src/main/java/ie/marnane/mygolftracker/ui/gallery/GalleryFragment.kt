@@ -6,10 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import ie.marnane.mygolftracker.adapters.GolfTrackerAdapter
+import ie.marnane.mygolftracker.adapters.GolfTrackerListener
+import ie.marnane.mygolftracker.adapters.ImageGalleryAdapter
+import ie.marnane.mygolftracker.adapters.ImageGalleryListener
 import ie.marnane.mygolftracker.databinding.FragmentGalleryBinding
+import ie.marnane.mygolftracker.models.GolfRoundModel
 
-class GalleryFragment : Fragment() {
+class GalleryFragment : Fragment(), ImageGalleryListener {
 
     private var _binding: FragmentGalleryBinding? = null
 
@@ -28,10 +35,13 @@ class GalleryFragment : Fragment() {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        galleryViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        galleryViewModel.observableImages.observe(viewLifecycleOwner, Observer {
+                images ->
+            images?.let { render(images) }
+        })
+
         return root
     }
 
@@ -39,4 +49,20 @@ class GalleryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun render(golfRoundsList: List<GolfRoundModel>) {
+        binding.recyclerView.adapter = ImageGalleryAdapter(golfRoundsList, this)
+        if (golfRoundsList.isEmpty()) {
+            binding.recyclerView.visibility = View.GONE
+            //binding.donationsNotFound.visibility = View.VISIBLE
+        } else {
+            binding.recyclerView.visibility = View.VISIBLE
+            // binding.donationsNotFound.visibility = View.GONE
+        }
+    }
+
+    override fun onImageClick(golfRound: GolfRoundModel) {
+        TODO("Not yet implemented")
+    }
+
 }

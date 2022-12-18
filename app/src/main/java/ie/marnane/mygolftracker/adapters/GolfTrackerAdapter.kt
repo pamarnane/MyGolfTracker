@@ -39,4 +39,5 @@ class GolfTrackerAdapter constructor(private var golfRounds: List<GolfRoundModel
             binding.root.setOnClickListener { listener.onGolfRoundClick(golfRound) }
         }
     }
+
 }

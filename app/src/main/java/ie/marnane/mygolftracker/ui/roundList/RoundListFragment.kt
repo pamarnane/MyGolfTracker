@@ -1,5 +1,6 @@
 package ie.marnane.mygolftracker.ui.roundList
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,18 +9,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ie.marnane.mygolftracker.R
 import ie.marnane.mygolftracker.adapters.GolfTrackerAdapter
 import ie.marnane.mygolftracker.adapters.GolfTrackerListener
 import ie.marnane.mygolftracker.databinding.FragmentRoundListBinding
 import ie.marnane.mygolftracker.models.GolfRoundModel
+import ie.marnane.mygolftracker.utils.SwipeToDeleteCallback
+import ie.marnane.mygolftracker.utils.createLoader
+import ie.marnane.mygolftracker.utils.showLoader
 
 
 class RoundListFragment : Fragment(), GolfTrackerListener {
 
     private var _binding: FragmentRoundListBinding? = null
-    private lateinit var roundDetailViewModel: RoundDetailViewModel
+    private lateinit var roundListViewModel: RoundListViewModel
+    lateinit var loader : AlertDialog
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,22 +37,46 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        roundDetailViewModel =
-            ViewModelProvider(this).get(RoundDetailViewModel::class.java)
+        roundListViewModel =
+            ViewModelProvider(this).get(roundListViewModel::class.java)
 
         _binding = FragmentRoundListBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        roundDetailViewModel.observableRoundsList.observe(viewLifecycleOwner, Observer {
+        roundListViewModel.observableRoundsList.observe(viewLifecycleOwner, Observer {
                 rounds ->
             rounds?.let { render(rounds) }
         })
+        loader = createLoader(requireActivity())
 
-        binding.addFAB.setOnClickListener {
+
+/*        binding.addFAB.setOnClickListener {
             findNavController().navigate(R.id.action_nav_round_list_to_nav_round);
+        }*/
+
+/*        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                showLoader(loader,"Deleting Donation")
+                val adapter = binding.recyclerView.adapter as GolfTrackerAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+                roundListViewModel.delete(roundListViewModel.liveFirebaseUser.value?.uid!!,
+                    (viewHolder.itemView.tag as DonationModel).uid!!)
+
+                hideLoader(loader)
+            }
         }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(fragBinding.recyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onDonationClick(viewHolder.itemView.tag as DonationModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(fragBinding.recyclerView)*/
 
         return root
     }
@@ -72,6 +103,6 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
 
     override fun onResume() {
         super.onResume()
-        roundDetailViewModel.load()
+        roundListViewModel.load()
     }
 }

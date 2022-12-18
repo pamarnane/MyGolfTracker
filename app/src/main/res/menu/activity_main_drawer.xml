@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/roundListFragment"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_sports_golf_24"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_gallery"
@@ -14,7 +14,16 @@
             android:title="@string/menu_gallery" />
         <item
             android:id="@+id/roundFragment"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_baseline_library_add_24"
             android:title="@string/menu_round" />
+        <item android:title="Access Control">
+            <menu>
+                <item
+                    android:id="@+id/nav_sign_out"
+                    android:icon="@android:drawable/ic_menu_revert"
+                    android:onClick="signOut"
+                    android:title="@string/sign_out" />
+            </menu>
+        </item>
     </group>
 </menu>
