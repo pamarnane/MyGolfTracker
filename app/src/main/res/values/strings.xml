@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">MyGolfTracker</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_round">Round</string>
+
+
+    <string name="menu_addRound">Add Round</string>
+    <string name="menu_showMap">Show Courses Map</string>
+    <string name="menu_cancelRound">Cancel</string>
+    <string name="menu_deleteRound">Delete</string>
+    <string name="button_addRound">Add Round</string>
+    <string name="save_round">Save Round</string>
+    <string name="hint_courseName">Course Played</string>
+    <string name="hint_date">Date Played</string>
+    <string name="hint_hole1">Hole 1</string>
+    <string name="hint_hole2">Hole 2</string>
+    <string name="hint_hole3">Hole 3</string>
+    <string name="hint_hole4">Hole 4</string>
+    <string name="hint_hole5">Hole 5</string>
+    <string name="hint_hole6">Hole 6</string>
+    <string name="hint_hole7">Hole 7</string>
+    <string name="hint_hole8">Hole 8</string>
+    <string name="hint_hole9">Hole 9</string>
+    <string name="hint_hole10">Hole 10</string>
+    <string name="hint_hole11">Hole 11</string>
+    <string name="hint_hole12">Hole 12</string>
+    <string name="hint_hole13">Hole 13</string>
+    <string name="hint_hole14">Hole 14</string>
+    <string name="hint_hole15">Hole 15</string>
+    <string name="hint_hole16">Hole 16</string>
+    <string name="hint_hole17">Hole 17</string>
+    <string name="hint_hole18">Hole 18</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="select_round_image">Add Round from Round</string>
+    <string name="menu_addImage">Add Round Image</string>
+    <string name="menu_openGallery">Open Image Gallery</string>
+    <string name="enter_course_name">Course name must be entered</string>
+    <string name="enter_course_date">Date played must be entered</string>
+</resources>
