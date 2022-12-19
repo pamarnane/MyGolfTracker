@@ -100,7 +100,7 @@ object FirebaseDBManager : GolfTrackerStore {
         database.updateChildren(childUpdate)
     }
 
-    override fun delete(userId: String, roundId: String, round: GolfRoundModel) {
+    override fun delete(userId: String, roundId: String) {
         val childDelete : MutableMap<String, Any?> = HashMap()
         childDelete["/rounds/$roundId"] = null
         childDelete["/user-rounds/$userId/$roundId"] = null

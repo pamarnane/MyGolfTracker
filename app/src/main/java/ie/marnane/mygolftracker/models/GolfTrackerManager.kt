@@ -27,7 +27,7 @@ object GolfTrackerManager : GolfTrackerStore {
         TODO("Not yet implemented")
     }
 
-    override fun delete(userId: String, roundId: String, round: GolfRoundModel) {
+    override fun delete(userId: String, roundId: String) {
         TODO("Not yet implemented")
     }
 

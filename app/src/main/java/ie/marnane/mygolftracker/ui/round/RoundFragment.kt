@@ -51,7 +51,6 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         val root: View = layout.root
         setupMenu()
 
-
         // *****
         layout.roundDate.setOnClickListener() {
             context?.let { it1 ->
@@ -65,8 +64,6 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
 
         // ****** Populate golf course spinner ****** //
-        /*val golfCourses = GolfTrackerManager.findAllCourses()
-        val golfCourseList = mutableListOf<String>()*/
         golfCourses.forEach { it ->
             golfCourseList.add(it.title)
         }
@@ -77,7 +74,6 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 it, android.R.layout.simple_spinner_item, golfCourseList)
         }
         layout.spinnerCourse.adapter = arrayAdapter
-
         layout.spinnerCourse.onItemSelectedListener = this
 
 
@@ -137,25 +133,24 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
         layout.roundDate.setText(golfRound.date)
 
-
-/*        layout.hole1.value = golfRound.scores[0]
-        layout.hole2.value = golfRound.scores[1]
-        layout.hole3.value = golfRound.scores[2]
-        layout.hole4.value = golfRound.scores[3]
-        layout.hole5.value = golfRound.scores[4]
-        layout.hole6.value = golfRound.scores[5]
-        layout.hole7.value = golfRound.scores[6]
-        layout.hole8.value = golfRound.scores[7]
-        layout.hole9.value = golfRound.scores[8]
-        layout.hole10.value = golfRound.scores[9]
-        layout.hole11.value = golfRound.scores[10]
-        layout.hole12.value = golfRound.scores[11]
-        layout.hole13.value = golfRound.scores[12]
-        layout.hole14.value = golfRound.scores[13]
-        layout.hole15.value = golfRound.scores[14]
-        layout.hole16.value = golfRound.scores[15]
-        layout.hole17.value = golfRound.scores[16]
-        layout.hole18.value = golfRound.scores[17]*/
+        layout.hole1.value = golfRound.scores.get("hole1")!!
+        layout.hole2.value = golfRound.scores.get("hole2")!!
+        layout.hole3.value = golfRound.scores.get("hole3")!!
+        layout.hole4.value = golfRound.scores.get("hole4")!!
+        layout.hole5.value = golfRound.scores.get("hole5")!!
+        layout.hole6.value = golfRound.scores.get("hole6")!!
+        layout.hole7.value = golfRound.scores.get("hole7")!!
+        layout.hole8.value = golfRound.scores.get("hole8")!!
+        layout.hole9.value = golfRound.scores.get("hole9")!!
+        layout.hole10.value = golfRound.scores.get("hole10")!!
+        layout.hole11.value = golfRound.scores.get("hole11")!!
+        layout.hole12.value = golfRound.scores.get("hole12")!!
+        layout.hole13.value = golfRound.scores.get("hole13")!!
+        layout.hole14.value = golfRound.scores.get("hole14")!!
+        layout.hole15.value = golfRound.scores.get("hole15")!!
+        layout.hole16.value = golfRound.scores.get("hole16")!!
+        layout.hole17.value = golfRound.scores.get("hole17")!!
+        layout.hole18.value = golfRound.scores.get("hole18")!!
     }
 
 
@@ -178,32 +173,12 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         _binding = null
     }
 
-
     fun setAddButtonListener(layout: FragmentRoundBinding) {
         layout.btnAdd.setOnClickListener{
             println("Add Button Click")
             //var golfRound = GolfRoundModel()
             //layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
             golfRound.date = layout.roundDate.text.toString()
-            golfRound.hole1 = layout.hole1.value
-/*            golfRound.scores[0] = layout.hole1.value
-            golfRound.scores[1] = layout.hole2.value
-            golfRound.scores[2] = layout.hole3.value
-            golfRound.scores[3] = layout.hole4.value
-            golfRound.scores[4] = layout.hole5.value
-            golfRound.scores[5] = layout.hole6.value
-            golfRound.scores[6] = layout.hole7.value
-            golfRound.scores[7] = layout.hole8.value
-            golfRound.scores[8] = layout.hole9.value
-            golfRound.scores[9] = layout.hole10.value
-            golfRound.scores[10] = layout.hole11.value
-            golfRound.scores[11] = layout.hole12.value
-            golfRound.scores[12] = layout.hole13.value
-            golfRound.scores[13] = layout.hole14.value
-            golfRound.scores[14] = layout.hole15.value
-            golfRound.scores[15] = layout.hole16.value
-            golfRound.scores[16] = layout.hole17.value
-            golfRound.scores[17] = layout.hole18.value*/
 
             val scoreMap = hashMapOf<String, Int>(
                 "hole1" to layout.hole1.value,

@@ -31,16 +31,7 @@ class RoundListViewModel : ViewModel() {
 
     }
 
-    fun delete(golfRound: GolfRoundModel) {
-        /*val foundGolfRound: GolfRoundModel? = GolfTrackerManager { p -> p.id == golfRound.id }
-        if (foundGolfRound != null) {
-            golfRounds.remove(foundGolfRound)
-            serialize()
-            logAll()
-        }*/
-    }
-
-    /*fun delete(userid: String, id: String) {
+    fun delete(userid: String, id: String) {
         try {
             //DonationManager.delete(userid,id)
             FirebaseDBManager.delete(userid,id)
@@ -49,5 +40,5 @@ class RoundListViewModel : ViewModel() {
         catch (e: Exception) {
             Timber.i("Report Delete Error : $e.message")
         }
-    }*/
+    }
 }

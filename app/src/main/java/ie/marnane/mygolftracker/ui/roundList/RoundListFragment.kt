@@ -12,7 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ie.marnane.mygolftracker.R
 import ie.marnane.mygolftracker.adapters.GolfTrackerAdapter
 import ie.marnane.mygolftracker.adapters.GolfTrackerListener
@@ -30,7 +32,6 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
     lateinit var loader : AlertDialog
-    //var golfRound = GolfRoundModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -40,21 +41,46 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         roundListViewModel =
             ViewModelProvider(this).get(RoundListViewModel::class.java)
-
         _binding = FragmentRoundListBinding.inflate(inflater, container, false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
         val root: View = binding.root
 
         loader = createLoader(requireActivity())
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
-
         roundListViewModel.observableRoundsList.observe(viewLifecycleOwner, Observer {
                 rounds ->
-            rounds?.let { render(rounds as ArrayList<GolfRoundModel>) }
+            rounds?.let { render(rounds as ArrayList<GolfRoundModel>)
+            checkSwipeRefresh()
+            }
         })
+
+        setSwipeRefresh()
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                showLoader(loader,"Deleting Round")
+                val adapter = binding.recyclerView.adapter as GolfTrackerAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+                roundListViewModel.delete(roundListViewModel.liveFirebaseUser.value?.uid!!,
+                    (viewHolder.itemView.tag as GolfRoundModel).uid!!)
+
+                hideLoader(loader)
+            }
+        }
+
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(binding.recyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onGolfRoundClick(viewHolder.itemView.tag as GolfRoundModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(binding.recyclerView)
 
         return root
     }
@@ -81,7 +107,7 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
 
     override fun onResume() {
         super.onResume()
-        showLoader(loader,"Downloading Donations")
+        showLoader(loader,"Downloading Rounds")
         loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
             if (firebaseUser != null) {
                 roundListViewModel.liveFirebaseUser.value = firebaseUser
@@ -91,4 +117,22 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
         hideLoader(loader)
     }
 
+    private fun setSwipeRefresh() {
+        binding.swiperefresh.setOnRefreshListener {
+            binding.swiperefresh.isRefreshing = true
+            showLoader(loader,"Downloading Rounds")
+            roundListViewModel.load()
+            hideLoader(loader)
+        }
+    }
+
+    private fun checkSwipeRefresh() {
+        if (binding.swiperefresh.isRefreshing)
+            binding.swiperefresh.isRefreshing = false
+    }
+
+    fun onDonationClick(round: GolfRoundModel) {
+        //val action = RoundListFragmentDirections.actionNavRoundListToNavRound(round.uid!!)
+        //findNavController().navigate(action)
+    }
 }

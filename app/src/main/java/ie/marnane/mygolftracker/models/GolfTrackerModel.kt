@@ -16,7 +16,6 @@ data class GolfRoundModel(var uid: String? = "",
                           var comment: String = "",
                           var scores : HashMap<String, Int> = hashMapOf<String, Int>(),
                           //var image: Uri = Uri.EMPTY,
-                          var hole1: Int = 0,
                           var email: String? = "joe@bloggs.com") : Parcelable
 {
     @Exclude
@@ -26,7 +25,6 @@ data class GolfRoundModel(var uid: String? = "",
             "course" to course,
             "date" to date,
             "comment" to comment,
-            "hole1" to hole1,
             "scores" to scores,
             //"image" to image,
             "email" to email
