@@ -34,9 +34,9 @@ class ImageGalleryAdapter constructor(private var golfRounds: List<GolfRoundMode
 
         fun bind(golfRound: GolfRoundModel, listener: ImageGalleryListener) {
             binding.imageCourseTitle.text = golfRound.course
-            Picasso.get()
+            /*Picasso.get()
                 .load(golfRound.image)
-                .into(binding.imageView)
+                .into(binding.imageView)*/
         }
     }
 }

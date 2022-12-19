@@ -29,7 +29,7 @@ class RoundDetailFragment : Fragment(), GolfTrackerListener {
     private var _binding: FragmentRoundListBinding? = null
     private lateinit var roundDetailViewModel: RoundDetailViewModel
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-    var golfRound = GolfRoundModel()
+    var golfRound = GolfRoundModel(scores = hashMapOf())
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -97,7 +97,7 @@ class RoundDetailFragment : Fragment(), GolfTrackerListener {
     }
 
     private fun registerImagePickerCallback() {
-        imageIntentLauncher =
+/*        imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
                 when(result.resultCode){
@@ -106,14 +106,14 @@ class RoundDetailFragment : Fragment(), GolfTrackerListener {
                             Timber.i("Got Result ${result.data!!.data}")
                             golfRound.image = result.data!!.data!!
                             GolfTrackerManager.update(golfRound)
-                            /*                         Picasso.get()
+                            *//*                         Picasso.get()
                                                          .load(golfRound.image)
-                                                         .into(binding.golfRound)*/
+                                                         .into(binding.golfRound)*//*
                         } // end of if
                     }
                     AppCompatActivity.RESULT_CANCELED -> { } else -> { }
                 }
-            }
+            }*/
     }
 
     override fun onResume() {

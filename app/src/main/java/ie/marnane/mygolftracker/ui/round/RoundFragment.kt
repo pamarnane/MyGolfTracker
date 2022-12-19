@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,7 +19,9 @@ import ie.marnane.mygolftracker.databinding.FragmentRoundBinding
 import ie.marnane.mygolftracker.helpers.showImagePicker
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
+import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
 import java.util.*
+import kotlin.collections.HashMap
 
 class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -26,13 +29,13 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var roundViewModel: RoundViewModel
 
     var cal = Calendar.getInstance()
-    var golfRound = GolfRoundModel()
+    var golfRound = GolfRoundModel(scores = hashMapOf())
 
     val golfCourses = GolfTrackerManager.findAllCourses()
     val golfCourseList = mutableListOf<String>()
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val layout get() = _binding!!
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -134,7 +137,8 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
         layout.roundDate.setText(golfRound.date)
 
-        layout.hole1.value = golfRound.scores[0]
+
+/*        layout.hole1.value = golfRound.scores[0]
         layout.hole2.value = golfRound.scores[1]
         layout.hole3.value = golfRound.scores[2]
         layout.hole4.value = golfRound.scores[3]
@@ -151,7 +155,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         layout.hole15.value = golfRound.scores[14]
         layout.hole16.value = golfRound.scores[15]
         layout.hole17.value = golfRound.scores[16]
-        layout.hole18.value = golfRound.scores[17]
+        layout.hole18.value = golfRound.scores[17]*/
     }
 
 
@@ -181,7 +185,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             //var golfRound = GolfRoundModel()
             //layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
             golfRound.date = layout.roundDate.text.toString()
-            golfRound.scores[0] = layout.hole1.value
+/*            golfRound.scores[0] = layout.hole1.value
             golfRound.scores[1] = layout.hole2.value
             golfRound.scores[2] = layout.hole3.value
             golfRound.scores[3] = layout.hole4.value
@@ -198,7 +202,31 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             golfRound.scores[14] = layout.hole15.value
             golfRound.scores[15] = layout.hole16.value
             golfRound.scores[16] = layout.hole17.value
-            golfRound.scores[17] = layout.hole18.value
+            golfRound.scores[17] = layout.hole18.value*/
+
+            val scoreMap = hashMapOf<String, Int>(
+                "1" to layout.hole1.value,
+                "2" to layout.hole2.value,
+                "3" to layout.hole3.value,
+                "4" to layout.hole4.value,
+                "5" to layout.hole5.value,
+                "6" to layout.hole6.value,
+                "7" to layout.hole7.value,
+                "8" to layout.hole8.value,
+                "9" to layout.hole9.value,
+                "10" to layout.hole10.value,
+                "11" to layout.hole11.value,
+                "12" to layout.hole12.value,
+                "13" to layout.hole13.value,
+                "14" to layout.hole14.value,
+                "15" to layout.hole15.value,
+                "16" to layout.hole16.value,
+                "17" to layout.hole17.value,
+                "18" to layout.hole18.value
+            )
+
+            golfRound.scores = scoreMap
+
 
 
             var validInput = false;
@@ -214,7 +242,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             else if (golfRound.course !=  "" && golfRound.date !=  "")  { validInput = true}
 
             if (validInput) {
-                roundViewModel.addGolfRound(golfRound)
+                roundViewModel.addGolfRound(loggedInViewModel.liveFirebaseUser, golfRound)
             }
             findNavController().popBackStack()
         }

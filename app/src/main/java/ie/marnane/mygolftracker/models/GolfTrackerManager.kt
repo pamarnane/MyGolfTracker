@@ -1,34 +1,38 @@
 package ie.marnane.mygolftracker.models
 
-object GolfTrackerManager : GolfTrackerStore {
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
+import ie.marnane.mygolftracker.firebase.FirebaseDBManager
 
-    private val golfRounds = ArrayList<GolfRoundModel>()
+object GolfTrackerManager : GolfTrackerStore {
     private val golfCourses = ArrayList<GolfCourseModel>()
 
-    override fun findAll(): List<GolfRoundModel> {
-        return golfRounds
-    }
-
-    override fun findAllwImages(): List<GolfRoundModel> {
+    override fun findAll(userId: String, roundsList: MutableLiveData<List<GolfRoundModel>>) {
         TODO("Not yet implemented")
     }
 
-    override fun create(golfRound: GolfRoundModel) {
-        golfRounds.add(golfRound)
-
-    }
-
-    override fun update(golfRound: GolfRoundModel) {
+    override fun findById(userId: String, roundId: String, round: MutableLiveData<GolfRoundModel>) {
         TODO("Not yet implemented")
     }
 
-    override fun delete(golfRound: GolfRoundModel) {
+    override fun findAllwImages(roundsList: MutableLiveData<List<GolfRoundModel>>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, round: GolfRoundModel) {
+        TODO("Not yet implemented")
+    }
+
+    override fun update(userId: String, roundId: String, golfRound: GolfRoundModel) {
+        TODO("Not yet implemented")
+    }
+
+    override fun delete(userId: String, roundId: String, round: GolfRoundModel) {
         TODO("Not yet implemented")
     }
 
     override fun createCourse(golfCourse: GolfCourseModel) {
         golfCourses.add(golfCourse)
-
     }
 
     override fun incCourseRoundsPlayed(golfCourse: GolfCourseModel) {
@@ -42,4 +46,6 @@ object GolfTrackerManager : GolfTrackerStore {
     override fun findAllCourses(): List<GolfCourseModel> {
         return golfCourses
     }
+
+
 }

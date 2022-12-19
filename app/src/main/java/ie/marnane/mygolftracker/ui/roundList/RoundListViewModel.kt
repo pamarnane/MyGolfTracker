@@ -32,7 +32,7 @@ class RoundListViewModel : ViewModel() {
         catch (e: Exception) {
             Timber.i("Report Load Error : $e.message")
         }*/
-        golfRounds.value = GolfTrackerManager.findAll()
+        //golfRounds.value = GolfTrackerManager.findAll()
     }
 
     /*fun delete(userid: String, id: String) {
