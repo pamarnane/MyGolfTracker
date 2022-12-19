@@ -1,14 +1,11 @@
-package ie.marnane.mygolftracker.ui.roundList
+package ie.marnane.mygolftracker.ui.roundListTBD
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,19 +15,15 @@ import ie.marnane.mygolftracker.adapters.GolfTrackerAdapter
 import ie.marnane.mygolftracker.adapters.GolfTrackerListener
 import ie.marnane.mygolftracker.databinding.FragmentRoundListBinding
 import ie.marnane.mygolftracker.models.GolfRoundModel
-import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
-import ie.marnane.mygolftracker.ui.roundListTBD.RoundListViewModel
-import ie.marnane.mygolftracker.utils.*
+import ie.marnane.mygolftracker.utils.createLoader
 
 
-class RoundListFragment : Fragment(), GolfTrackerListener {
+class RoundListFragmentTBD : Fragment()//, GolfTrackerListener
+ {
 
-    private var _binding: FragmentRoundListBinding? = null
-    private lateinit var roundListViewModel: RoundListViewModel
-    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+   /* private var _binding: FragmentRoundListBinding? = null
+    private lateinit var roundListViewModelTBD: RoundListViewModelTBD
     lateinit var loader : AlertDialog
-    //var golfRound = GolfRoundModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,20 +34,45 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        roundListViewModel =
-            ViewModelProvider(this).get(RoundListViewModel::class.java)
+        roundListViewModelTBD =
+            ViewModelProvider(this).get(roundListViewModelTBD::class.java)
 
         _binding = FragmentRoundListBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        loader = createLoader(requireActivity())
-
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
-        roundListViewModel.observableRoundsList.observe(viewLifecycleOwner, Observer {
+        roundListViewModelTBD.observableRoundsList.observe(viewLifecycleOwner, Observer {
                 rounds ->
             rounds?.let { render(rounds as ArrayList<GolfRoundModel>) }
         })
+        loader = createLoader(requireActivity())
+
+*//*        binding.addFAB.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_round_list_to_nav_round);
+        }*//*
+
+*//*        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                showLoader(loader,"Deleting Donation")
+                val adapter = binding.recyclerView.adapter as GolfTrackerAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+                roundListViewModel.delete(roundListViewModel.liveFirebaseUser.value?.uid!!,
+                    (viewHolder.itemView.tag as DonationModel).uid!!)
+
+                hideLoader(loader)
+            }
+        }
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(fragBinding.recyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onDonationClick(viewHolder.itemView.tag as DonationModel)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(fragBinding.recyclerView)*//*
 
         return root
     }
@@ -71,7 +89,7 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
             //binding.donationsNotFound.visibility = View.VISIBLE
         } else {
             binding.recyclerView.visibility = View.VISIBLE
-            // binding.donationsNotFound.visibility = View.GONE
+           // binding.donationsNotFound.visibility = View.GONE
         }
     }
 
@@ -81,14 +99,8 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
 
     override fun onResume() {
         super.onResume()
-        showLoader(loader,"Downloading Donations")
-        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
-            if (firebaseUser != null) {
-                roundListViewModel.liveFirebaseUser.value = firebaseUser
-                roundListViewModel.load()
-            }
-        })
-        hideLoader(loader)
+        roundListViewModelTBD.load()
     }
 
+*/
 }

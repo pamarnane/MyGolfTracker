@@ -13,20 +13,20 @@ object FirebaseDBManager : GolfTrackerStore {
 
     override fun findAll(userid: String, roundsList: MutableLiveData<List<GolfRoundModel>>) {
 
-        database.child("user-donations").child(userid)
+        database.child("user-rounds").child(userid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
-                    Timber.i("Firebase Donation error : ${error.message}")
+                    Timber.i("Firebase Golf Round error : ${error.message}")
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val localList = ArrayList<GolfRoundModel>()
                     val children = snapshot.children
                     children.forEach {
-                        val donation = it.getValue(GolfRoundModel::class.java)
-                        localList.add(donation!!)
+                        val round = it.getValue(GolfRoundModel::class.java)
+                        localList.add(round!!)
                     }
-                    database.child("user-donations").child(userid)
+                    database.child("user-rounds").child(userid)
                         .removeEventListener(this)
 
                     roundsList.value = localList
@@ -39,7 +39,7 @@ object FirebaseDBManager : GolfTrackerStore {
         roundId: String,
         round: MutableLiveData<GolfRoundModel>,
     ) {
-        database.child("user-donations").child(userId)
+        database.child("user-rounds").child(userId)
             .child(roundId).get().addOnSuccessListener {
                 round.value = it.getValue(GolfRoundModel::class.java)
                 Timber.i("firebase Got value ${it.value}")

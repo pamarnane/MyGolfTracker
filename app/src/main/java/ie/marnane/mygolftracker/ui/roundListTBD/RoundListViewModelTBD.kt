@@ -8,9 +8,9 @@ import ie.marnane.mygolftracker.firebase.FirebaseDBManager
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import timber.log.Timber
 
-class RoundListViewModel : ViewModel() {
+class RoundListViewModelTBD : ViewModel() {
 
-    private val golfRounds =
+   /* private val golfRounds =
         MutableLiveData<List<GolfRoundModel>>()
 
     val observableRoundsList: LiveData<List<GolfRoundModel>>
@@ -31,16 +31,7 @@ class RoundListViewModel : ViewModel() {
 
     }
 
-    fun delete(golfRound: GolfRoundModel) {
-        /*val foundGolfRound: GolfRoundModel? = GolfTrackerManager { p -> p.id == golfRound.id }
-        if (foundGolfRound != null) {
-            golfRounds.remove(foundGolfRound)
-            serialize()
-            logAll()
-        }*/
-    }
-
-    /*fun delete(userid: String, id: String) {
+    *//*fun delete(userid: String, id: String) {
         try {
             //DonationManager.delete(userid,id)
             FirebaseDBManager.delete(userid,id)

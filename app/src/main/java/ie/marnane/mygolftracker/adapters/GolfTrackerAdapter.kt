@@ -33,9 +33,15 @@ class GolfTrackerAdapter constructor(private var golfRounds: List<GolfRoundModel
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(golfRound: GolfRoundModel, listener: GolfTrackerListener) {
+            var totalScore = 0;
             binding.roundCourse.text = golfRound.course
             binding.roundDate.text = golfRound.date
-            binding.totalScore.text = golfRound.scores.sum().toString()
+
+            golfRound.scores.forEach {score ->
+                totalScore = score.value
+            }
+
+            binding.totalScore.text = totalScore.toString();
             binding.root.setOnClickListener { listener.onGolfRoundClick(golfRound) }
         }
     }

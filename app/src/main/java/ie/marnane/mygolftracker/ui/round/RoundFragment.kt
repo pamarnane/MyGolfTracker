@@ -29,7 +29,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var roundViewModel: RoundViewModel
 
     var cal = Calendar.getInstance()
-    var golfRound = GolfRoundModel(scores = hashMapOf())
+    var golfRound = GolfRoundModel()
 
     val golfCourses = GolfTrackerManager.findAllCourses()
     val golfCourseList = mutableListOf<String>()
@@ -185,6 +185,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             //var golfRound = GolfRoundModel()
             //layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
             golfRound.date = layout.roundDate.text.toString()
+            golfRound.hole1 = layout.hole1.value
 /*            golfRound.scores[0] = layout.hole1.value
             golfRound.scores[1] = layout.hole2.value
             golfRound.scores[2] = layout.hole3.value
@@ -205,24 +206,24 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             golfRound.scores[17] = layout.hole18.value*/
 
             val scoreMap = hashMapOf<String, Int>(
-                "1" to layout.hole1.value,
-                "2" to layout.hole2.value,
-                "3" to layout.hole3.value,
-                "4" to layout.hole4.value,
-                "5" to layout.hole5.value,
-                "6" to layout.hole6.value,
-                "7" to layout.hole7.value,
-                "8" to layout.hole8.value,
-                "9" to layout.hole9.value,
-                "10" to layout.hole10.value,
-                "11" to layout.hole11.value,
-                "12" to layout.hole12.value,
-                "13" to layout.hole13.value,
-                "14" to layout.hole14.value,
-                "15" to layout.hole15.value,
-                "16" to layout.hole16.value,
-                "17" to layout.hole17.value,
-                "18" to layout.hole18.value
+                "hole1" to layout.hole1.value,
+                "hole2" to layout.hole2.value,
+                "hole3" to layout.hole3.value,
+                "hole4" to layout.hole4.value,
+                "hole5" to layout.hole5.value,
+                "hole6" to layout.hole6.value,
+                "hole7" to layout.hole7.value,
+                "hole8" to layout.hole8.value,
+                "hole9" to layout.hole9.value,
+                "hole10" to layout.hole10.value,
+                "hole11" to layout.hole11.value,
+                "hole12" to layout.hole12.value,
+                "hole13" to layout.hole13.value,
+                "hole14" to layout.hole14.value,
+                "hole15" to layout.hole15.value,
+                "hole16" to layout.hole16.value,
+                "hole17" to layout.hole17.value,
+                "hole18" to layout.hole18.value
             )
 
             golfRound.scores = scoreMap
