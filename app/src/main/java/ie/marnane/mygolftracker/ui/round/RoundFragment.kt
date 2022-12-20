@@ -1,9 +1,14 @@
 package ie.marnane.mygolftracker.ui.round
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -15,12 +20,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
+import ie.marnane.mygolftracker.MainActivity
 import ie.marnane.mygolftracker.R
 import ie.marnane.mygolftracker.databinding.FragmentRoundBinding
+import ie.marnane.mygolftracker.firebase.FirebaseImageManager
 import ie.marnane.mygolftracker.helpers.showImagePicker
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
+import ie.marnane.mygolftracker.utils.readImageUri
+import timber.log.Timber
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -28,6 +37,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private var _binding: FragmentRoundBinding? = null
     private lateinit var roundViewModel: RoundViewModel
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
 
     var cal = Calendar.getInstance()
     var golfRound = GolfRoundModel()
@@ -84,6 +94,8 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setNumberPickersMinMax()
         // ****** Set add button listener ****** //
         setAddButtonListener(layout)
+        setAddImgButtonListener(layout)
+        registerImagePickerCallback()
 
         return root
     }
@@ -164,10 +176,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 "hole17" to layout.hole17.value,
                 "hole18" to layout.hole18.value
             )
-
             golfRound.scores = scoreMap
-
-
 
             var validInput = false;
 
@@ -182,9 +191,18 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             else if (golfRound.course !=  "" && golfRound.date !=  "")  { validInput = true}
 
             if (validInput) {
+                var uri = Uri.EMPTY
+                 uri = FirebaseImageManager.imageUri.value
+                golfRound.image = uri.toString()
                 roundViewModel.addGolfRound(loggedInViewModel.liveFirebaseUser, golfRound)
             }
             findNavController().popBackStack()
+        }
+    }
+
+    fun setAddImgButtonListener(layout: FragmentRoundBinding) {
+        layout.btnAddImg.setOnClickListener{
+            showImagePicker(imageIntentLauncher)
         }
     }
 
@@ -235,5 +253,33 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         layout.hole17.maxValue = 10
         layout.hole18.minValue = 0
         layout.hole18.maxValue = 10
+    }
+
+    private fun registerImagePickerCallback() {
+
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    AppCompatActivity.RESULT_OK -> {
+                        if (result.data != null) {
+                            Timber.i("Got Result ${result.data!!.data}")
+                            golfRound.image = result.data!!.data!!.toString()
+                            var test = readImageUri(result.resultCode, result.data)
+                            /*golfRound.image = result.data!!.data!!
+                            app.golfRounds.update(golfRound)
+                            *//*                         Picasso.get()
+                                                         .load(golfRound.image)
+                                                         .into(binding.golfRound)*/
+                            var test1 = FirebaseImageManager
+                                .updateRoundImage(loggedInViewModel.liveFirebaseUser.value!!.uid,
+                                    readImageUri(result.resultCode, result.data),
+                                    //navHeaderBinding.navHeaderImage,
+                                    true)
+                        } // end of if
+                    }
+                    AppCompatActivity.RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }

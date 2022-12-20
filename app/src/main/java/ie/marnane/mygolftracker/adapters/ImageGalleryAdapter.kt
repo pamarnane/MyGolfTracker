@@ -2,9 +2,11 @@ package ie.marnane.mygolftracker.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ie.marnane.mygolftracker.databinding.ImagegalleryItemBinding
+import ie.marnane.mygolftracker.firebase.FirebaseImageManager
 import ie.marnane.mygolftracker.models.GolfRoundModel
 
 interface ImageGalleryListener {
@@ -34,9 +36,11 @@ class ImageGalleryAdapter constructor(private var golfRounds: List<GolfRoundMode
 
         fun bind(golfRound: GolfRoundModel, listener: ImageGalleryListener) {
             binding.imageCourseTitle.text = golfRound.course
-            /*Picasso.get()
+            if (golfRound.image != "") {
+            Picasso.get()
                 .load(golfRound.image)
-                .into(binding.imageView)*/
+                .into(binding.imageView)
+            }
         }
     }
 }

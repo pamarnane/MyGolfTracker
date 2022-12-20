@@ -17,7 +17,9 @@
     <string name="menu_showMap">Show Courses Map</string>
     <string name="menu_cancelRound">Cancel</string>
     <string name="menu_deleteRound">Delete</string>
+    <string name="menu_updateRound">Update Round</string>
     <string name="button_addRound">Add Round</string>
+    <string name="button_addImage">Add Image</string>
     <string name="button_updateRound">Update Round</string>
     <string name="save_round">Save Round</string>
     <string name="update_round">Update Round</string>

@@ -39,8 +39,8 @@
     <fragment
         android:id="@+id/roundUpdateFragment"
         android:name="ie.marnane.mygolftracker.ui.roundUpdate.RoundUpdateFragment"
-        android:label="fragment_round_update"
-        tools:layout="@layout/fragment_round_update" >
+        android:label="@string/menu_updateRound"
+        tools:layout="@layout/fragment_round_update">
         <argument
             android:name="roundId"
             app:argType="string" />
