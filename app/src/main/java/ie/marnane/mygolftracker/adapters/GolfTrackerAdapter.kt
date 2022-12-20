@@ -43,12 +43,13 @@ class GolfTrackerAdapter constructor(private var golfRounds: ArrayList<GolfRound
             binding.roundDate.text = golfRound.date
 
             golfRound.scores.forEach {score ->
-                totalScore = score.value
+                totalScore += score.value
             }
-
             binding.totalScore.text = totalScore.toString();
-            binding.root.setOnClickListener { listener.onGolfRoundClick(golfRound) }
 
+            binding.golfRound = golfRound
+            binding.root.setOnClickListener { listener.onGolfRoundClick(golfRound) }
+            binding.executePendingBindings()
         }
     }
 

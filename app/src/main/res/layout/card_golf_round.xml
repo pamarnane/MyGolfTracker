@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="donation"
+            name="golfRound"
             type="ie.marnane.mygolftracker.models.GolfRoundModel" />
     </data>
     <androidx.cardview.widget.CardView

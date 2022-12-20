@@ -1,4 +1,4 @@
-package ie.marnane.mygolftracker.ui.round
+package ie.marnane.mygolftracker.ui.roundUpdate
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,11 +8,7 @@ import ie.marnane.mygolftracker.firebase.FirebaseDBManager
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import timber.log.Timber
 
-class RoundViewModel : ViewModel() {
-    private val status = MutableLiveData<Boolean>()
-
-    val observableStatus: LiveData<Boolean>
-        get() = status
+class RoundUpdateViewModel : ViewModel() {
 
     private val round = MutableLiveData<GolfRoundModel>()
 
@@ -20,15 +16,6 @@ class RoundViewModel : ViewModel() {
         get() = round
         set(value) {round.value = value.value}
 
-    fun addGolfRound(firebaseUser: MutableLiveData<FirebaseUser>, golfRound: GolfRoundModel) {
-        status.value = try {
-           // GolfTrackerManager.create(golfRound)
-            FirebaseDBManager.create(firebaseUser, golfRound)
-            true
-        } catch (e: IllegalArgumentException) {
-            false
-        }
-    }
 
     fun getRound(userid:String, id: String) {
         try {

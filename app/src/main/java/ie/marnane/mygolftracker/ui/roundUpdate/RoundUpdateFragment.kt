@@ -1,9 +1,8 @@
-package ie.marnane.mygolftracker.ui.round
+package ie.marnane.mygolftracker.ui.roundUpdate
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.*
-import android.widget.*
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -15,75 +14,52 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
-import ie.marnane.mygolftracker.R
-import ie.marnane.mygolftracker.databinding.FragmentRoundBinding
-import ie.marnane.mygolftracker.helpers.showImagePicker
+import ie.marnane.mygolftracker.databinding.FragmentRoundUpdateBinding
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
+import ie.marnane.mygolftracker.ui.round.RoundFragmentArgs
+import ie.marnane.mygolftracker.ui.roundUpdate.RoundUpdateViewModel
+import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
 
-class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
-
-    private var _binding: FragmentRoundBinding? = null
-    private lateinit var roundViewModel: RoundViewModel
+class RoundUpdateFragment : Fragment() {
+    private var _binding: FragmentRoundUpdateBinding? = null
+    private lateinit var roundUpdateViewModel: RoundUpdateViewModel
 
     var cal = Calendar.getInstance()
-    var golfRound = GolfRoundModel()
+    //var golfRound = GolfRoundModel()
 
     val golfCourses = GolfTrackerManager.findAllCourses()
     val golfCourseList = mutableListOf<String>()
 
     private val layout get() = _binding!!
     private val loggedInViewModel : LoggedInViewModel by activityViewModels()
-    private val args by navArgs<RoundFragmentArgs>()
+    private val args by navArgs<RoundUpdateFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentRoundBinding.inflate(inflater, container, false)
+    ): View? {
+        _binding = FragmentRoundUpdateBinding.inflate(inflater, container, false)
         val root: View = layout.root
 
-        roundViewModel = ViewModelProvider(this).get(RoundViewModel::class.java)
-        roundViewModel.observableStatus.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                status -> status?.let { render(status) }
-        })
+        roundUpdateViewModel = ViewModelProvider(this).get(RoundUpdateViewModel::class.java)
+        roundUpdateViewModel.observableRound.observe(viewLifecycleOwner, androidx.lifecycle.Observer { render() })
+
+        /*layout.btnUpdate.setOnClickListener {
+            roundUpdateViewModel.updateRound(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+                args.roundId, layout.round?.observableRound!!.value!!)
+            findNavController().navigateUp()
+        }*/
 
         setupMenu()
-
-        // *****
-        layout.roundDate.setOnClickListener() {
-            context?.let { it1 ->
-                DatePickerDialog(it1,
-                    dateSetListener,
-                    // set DatePickerDialog to point to today's date when it loads up
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)).show()
-            }
-        }
-
-        // ****** Populate golf course spinner ****** //
-        golfCourses.forEach { it ->
-            golfCourseList.add(it.title)
-        }
-        golfCourseList.sort()
-
-        val arrayAdapter = context?.let {
-            ArrayAdapter(
-                it, android.R.layout.simple_spinner_item, golfCourseList)
-        }
-        layout.spinnerCourse.adapter = arrayAdapter
-        layout.spinnerCourse.onItemSelectedListener = this
-
 
         // ****** Set Score picker Min/Max ****** //
         setNumberPickersMinMax()
         // ****** Set add button listener ****** //
-        setAddButtonListener(layout)
+        setUpdateButtonListener(layout)
 
         return root
     }
@@ -95,7 +71,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_round, menu)
+                menuInflater.inflate(ie.marnane.mygolftracker.R.menu.menu_round, menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -106,43 +82,47 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun render(status: Boolean) {
-        when (status) {
-            true -> {
-                view?.let {
-                    //Uncomment this if you want to immediately return to Report
-                    findNavController().popBackStack()
-                }
-            }
-            false -> Toast.makeText(context,"Error",Toast.LENGTH_LONG).show()
-        }
+    private fun render() {
+
+        layout.round = roundUpdateViewModel
+        layout.hole1.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole1")!!
+        layout.hole2.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole2")!!
+        layout.hole3.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole3")!!
+        layout.hole4.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole4")!!
+        layout.hole5.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole5")!!
+        layout.hole6.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole6")!!
+        layout.hole7.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole7")!!
+        layout.hole8.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole8")!!
+        layout.hole9.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole9")!!
+        layout.hole10.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole10")!!
+        layout.hole11.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole11")!!
+        layout.hole12.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole12")!!
+        layout.hole13.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole13")!!
+        layout.hole14.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole14")!!
+        layout.hole15.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole15")!!
+        layout.hole16.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole16")!!
+        layout.hole17.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole17")!!
+        layout.hole18.value = roundUpdateViewModel.observableRound.value?.scores?.get("hole18")!!
+        Timber.i("Retrofit layout.round == $layout.round")
     }
 
-    // Create an OnDateSetListener
-    private val dateSetListener = object : DatePickerDialog.OnDateSetListener {
-        var cal = Calendar.getInstance()
-        override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
-                               dayOfMonth: Int) {
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, monthOfYear)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            val updatedMonth = monthOfYear + 1
-            val myFormat = (dayOfMonth.toString() + "/" + updatedMonth.toString() + "/" + year.toString())
-            layout.roundDate.setText(myFormat)
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    fun setAddButtonListener(layout: FragmentRoundBinding) {
-        layout.btnAdd.setOnClickListener{
+    override fun onResume() {
+        super.onResume()
+        roundUpdateViewModel.getRound(loggedInViewModel.liveFirebaseUser.value?.uid!!,
+            args.roundId)
+    }
+
+    fun setUpdateButtonListener(layout: FragmentRoundUpdateBinding) {
+        layout.btnUpdate.setOnClickListener{
             println("Add Button Click")
-            //var golfRound = GolfRoundModel()
-            //layout.spinnerCourse.setSelection(golfCourseList.indexOf(golfRound.course))
-            golfRound.date = layout.roundDate.text.toString()
+
+
 
             val scoreMap = hashMapOf<String, Int>(
                 "hole1" to layout.hole1.value,
@@ -165,36 +145,13 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 "hole18" to layout.hole18.value
             )
 
-            golfRound.scores = scoreMap
+            //golfRound.scores = scoreMap
+            layout.round?.observableRound!!.value!!.scores = scoreMap
 
+            roundUpdateViewModel.updateRound(loggedInViewModel.liveFirebaseUser.value?.uid!!, args.roundId, layout.round?.observableRound!!.value!!)
 
-
-            var validInput = false;
-
-            if(golfRound.course ==  ""){
-                Toast.makeText(context, getString(R.string.enter_course_name), Toast.LENGTH_LONG)
-                    .show()
-            }
-            else if (golfRound.date ==  "") {
-                Snackbar.make(it, R.string.enter_course_date, Snackbar.LENGTH_LONG)
-                    .show()
-            }
-            else if (golfRound.course !=  "" && golfRound.date !=  "")  { validInput = true}
-
-            if (validInput) {
-                roundViewModel.addGolfRound(loggedInViewModel.liveFirebaseUser, golfRound)
-            }
             findNavController().popBackStack()
         }
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        var text: String = parent?.getItemAtPosition(position).toString()
-        golfRound.course = text
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("Not yet implemented")
     }
 
 

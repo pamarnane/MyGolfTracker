@@ -21,6 +21,8 @@ import ie.marnane.mygolftracker.adapters.GolfTrackerListener
 import ie.marnane.mygolftracker.databinding.FragmentRoundListBinding
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
+import ie.marnane.mygolftracker.ui.round.RoundFragment
+import ie.marnane.mygolftracker.ui.round.RoundFragmentDirections
 import ie.marnane.mygolftracker.ui.roundListTBD.RoundListViewModel
 import ie.marnane.mygolftracker.utils.*
 
@@ -94,15 +96,16 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
         binding.recyclerView.adapter = GolfTrackerAdapter(golfRoundsList,this)
         if (golfRoundsList.isEmpty()) {
             binding.recyclerView.visibility = View.GONE
-            //binding.donationsNotFound.visibility = View.VISIBLE
+            // binding.roundsNotFound.visibility = View.VISIBLE
         } else {
             binding.recyclerView.visibility = View.VISIBLE
-            // binding.donationsNotFound.visibility = View.GONE
+            // binding.roundsNotFound.visibility = View.GONE
         }
     }
 
     override fun onGolfRoundClick(golfRound: GolfRoundModel) {
-        findNavController().navigate(R.id.action_nav_round_list_to_nav_round);
+        val action = RoundListFragmentDirections.actionRoundListFragmentToRoundUpdateFragment(golfRound.uid!!)
+        findNavController().navigate(action);
     }
 
     override fun onResume() {
@@ -129,10 +132,5 @@ class RoundListFragment : Fragment(), GolfTrackerListener {
     private fun checkSwipeRefresh() {
         if (binding.swiperefresh.isRefreshing)
             binding.swiperefresh.isRefreshing = false
-    }
-
-    fun onDonationClick(round: GolfRoundModel) {
-        //val action = RoundListFragmentDirections.actionNavRoundListToNavRound(round.uid!!)
-        //findNavController().navigate(action)
     }
 }

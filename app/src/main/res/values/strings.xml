@@ -18,7 +18,9 @@
     <string name="menu_cancelRound">Cancel</string>
     <string name="menu_deleteRound">Delete</string>
     <string name="button_addRound">Add Round</string>
+    <string name="button_updateRound">Update Round</string>
     <string name="save_round">Save Round</string>
+    <string name="update_round">Update Round</string>
     <string name="hint_courseName">Course Played</string>
     <string name="hint_date">Date Played</string>
     <string name="hint_hole1">Hole 1</string>
