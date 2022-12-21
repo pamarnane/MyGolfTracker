@@ -31,21 +31,42 @@ object GolfTrackerManager : GolfTrackerStore {
         TODO("Not yet implemented")
     }
 
-    override fun createCourse(golfCourse: GolfCourseModel) {
+    override fun createCourse(
+        firebaseUser: MutableLiveData<FirebaseUser>,
+        golfCourse: GolfCourseModel,
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    fun createCourse(golfCourse: GolfCourseModel) {
         golfCourses.add(golfCourse)
     }
 
     override fun incCourseRoundsPlayed(golfCourse: GolfCourseModel) {
-        TODO("Not yet implemented")
+        val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.uid == golfCourse.uid }
+        if (foundGolfCourse != null) {
+            foundGolfCourse.roundsPlayed += 1
+
+        }
     }
 
     override fun decCourseRoundsPlayed(golfCourseName: String) {
-        TODO("Not yet implemented")
+        val foundGolfCourse: GolfCourseModel? = golfCourses.find { p -> p.title == golfCourseName }
+        if (foundGolfCourse != null) {
+            foundGolfCourse.roundsPlayed -= 1
+
+        }
     }
 
     override fun findAllCourses(): List<GolfCourseModel> {
         return golfCourses
     }
+
+    override fun findAllCourses(coursesList: MutableLiveData<List<GolfCourseModel>>) {
+        coursesList.value = golfCourses
+    }
+
+
 
 
 }

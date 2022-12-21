@@ -45,4 +45,9 @@
             android:name="roundId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="ie.marnane.mygolftracker.ui.map.MapsFragment"
+        android:label="Rounds Map"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

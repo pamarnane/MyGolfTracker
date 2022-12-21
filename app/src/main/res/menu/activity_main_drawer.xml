@@ -9,13 +9,17 @@
             android:icon="@drawable/ic_baseline_sports_golf_24"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/roundFragment"
+            android:icon="@drawable/ic_baseline_library_add_24"
+            android:title="@string/menu_round" />
+        <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />
         <item
-            android:id="@+id/roundFragment"
-            android:icon="@drawable/ic_baseline_library_add_24"
-            android:title="@string/menu_round" />
+            android:id="@+id/mapFragment"
+            android:icon="@android:drawable/ic_dialog_map"
+            android:title="Map" />
         <item android:title="Access Control">
             <menu>
                 <item

@@ -21,8 +21,9 @@ interface GolfTrackerStore {
     fun update(userId: String, roundId: String, golfRound: GolfRoundModel)
     fun delete(userId: String, roundId: String)
 
-    fun createCourse(golfCourse: GolfCourseModel)
+    fun createCourse(firebaseUser: MutableLiveData<FirebaseUser>, golfCourse: GolfCourseModel)
     fun incCourseRoundsPlayed(golfCourse: GolfCourseModel)
     fun decCourseRoundsPlayed(golfCourseName: String)
     fun findAllCourses(): List<GolfCourseModel>
+    fun findAllCourses(coursesList:MutableLiveData<List<GolfCourseModel>>)
 }

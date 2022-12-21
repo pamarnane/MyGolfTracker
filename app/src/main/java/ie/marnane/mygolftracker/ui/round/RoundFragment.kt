@@ -14,24 +14,26 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
-import ie.marnane.mygolftracker.MainActivity
 import ie.marnane.mygolftracker.R
 import ie.marnane.mygolftracker.databinding.FragmentRoundBinding
+import ie.marnane.mygolftracker.firebase.FirebaseDBManager
 import ie.marnane.mygolftracker.firebase.FirebaseImageManager
 import ie.marnane.mygolftracker.helpers.showImagePicker
+import ie.marnane.mygolftracker.models.GolfCourseModel
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
 import ie.marnane.mygolftracker.utils.readImageUri
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
+
 
 class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -43,6 +45,9 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
     var golfRound = GolfRoundModel()
 
     val golfCourses = GolfTrackerManager.findAllCourses()
+    //var golfCourses = MutableLiveData<List<GolfCourseModel>>()
+
+
     val golfCourseList = mutableListOf<String>()
 
     private val layout get() = _binding!!

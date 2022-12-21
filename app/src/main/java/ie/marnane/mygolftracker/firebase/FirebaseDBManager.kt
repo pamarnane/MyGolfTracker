@@ -48,6 +48,7 @@ object FirebaseDBManager : GolfTrackerStore {
             }
     }
 
+
     override fun findAllwImages(roundsList: MutableLiveData<List<GolfRoundModel>>) {
         TODO("Not yet implemented")
     }
@@ -72,8 +73,22 @@ object FirebaseDBManager : GolfTrackerStore {
         database.updateChildren(childAdd)
     }
 
-    override fun createCourse(golfCourse: GolfCourseModel) {
-        TODO("Not yet implemented")
+    override fun createCourse(firebaseUser: MutableLiveData<FirebaseUser>, golfCourse: GolfCourseModel) {
+        Timber.i("Firebase DB Reference : $database")
+
+        val uid = firebaseUser.value!!.uid
+        val key = database.child("courses").push().key
+        if (key == null) {
+            Timber.i("Firebase Error : Key Empty")
+            return
+        }
+        golfCourse.uid = key
+        val roundDetails = golfCourse.toMap()
+
+        val childAdd = HashMap<String, Any>()
+        childAdd["/courses/$key"] = roundDetails
+
+        database.updateChildren(childAdd)
     }
 
     override fun incCourseRoundsPlayed(golfCourse: GolfCourseModel) {
@@ -86,6 +101,28 @@ object FirebaseDBManager : GolfTrackerStore {
 
     override fun findAllCourses(): List<GolfCourseModel> {
         TODO("Not yet implemented")
+    }
+
+    override fun findAllCourses(coursesList: MutableLiveData<List<GolfCourseModel>>) {
+        database.child("courses")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Firebase Golf Round error : ${error.message}")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val localList = ArrayList<GolfCourseModel>()
+                    val children = snapshot.children
+                    children.forEach {
+                        val course = it.getValue(GolfCourseModel::class.java)
+                        localList.add(course!!)
+                    }
+                    database.child("courses")
+                        .removeEventListener(this)
+
+                    coursesList.value = localList
+                }
+            })
     }
 
 

@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseUser
 import ie.marnane.mygolftracker.databinding.ActivityMainBinding
 import ie.marnane.mygolftracker.databinding.NavHeaderMainBinding
+import ie.marnane.mygolftracker.firebase.FirebaseDBManager
 import ie.marnane.mygolftracker.models.GolfCourseModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
@@ -44,44 +45,9 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.roundListFragment, R.id.nav_gallery, R.id.roundFragment), drawerLayout)
+            R.id.roundListFragment, R.id.nav_gallery, R.id.roundFragment, R.id.mapFragment), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
-
-        val golfCourse = GolfCourseModel()
-
-        golfCourse.title = "Ennis GC"
-        golfCourse.lat = 52.84092016654442
-        golfCourse.lng = -8.998135028815737
-        golfCourse.icon = "ennis"
-        GolfTrackerManager.createCourse(golfCourse.copy())
-
-
-        golfCourse.title = "Dromoland Castle GC"
-        golfCourse.lat = 52.78218837292427
-        golfCourse.lng = -8.909143400919719
-        golfCourse.icon = "dromoland"
-        GolfTrackerManager.createCourse(golfCourse.copy())
-
-        golfCourse.title = "Lahinch GC - Old"
-        golfCourse.lat = 52.93535192772572
-        golfCourse.lng = -9.345525869316168
-        golfCourse.icon = "lahinch_old"
-        GolfTrackerManager.createCourse(golfCourse.copy())
-
-        golfCourse.title = "Lahinch GC - Castle"
-        golfCourse.lat = 52.93535192772572
-        golfCourse.lng = -9.345525869316168
-        golfCourse.icon = "lahinch_castle"
-        GolfTrackerManager.createCourse(golfCourse.copy())
-
-        golfCourse.title = "Shannon GC"
-        golfCourse.lat = 52.68938272732169
-        golfCourse.lng = -8.937344286642613
-        golfCourse.icon = "lahinch"
-        GolfTrackerManager.createCourse(golfCourse.copy())
 
     }
 
@@ -92,6 +58,46 @@ class MainActivity : AppCompatActivity() {
             if (firebaseUser != null) {
                 //val currentUser = loggedInViewModel.liveFirebaseUser.value
                 /*if (currentUser != null)*/ updateNavHeader(loggedInViewModel.liveFirebaseUser.value!!)
+
+                val golfCourse = GolfCourseModel()
+
+                golfCourse.title = "Ennis GC"
+                golfCourse.lat = 52.84092016654442
+                golfCourse.lng = -8.998135028815737
+                golfCourse.icon = "ennis"
+                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+
+                golfCourse.title = "Dromoland Castle GC"
+                golfCourse.lat = 52.78218837292427
+                golfCourse.lng = -8.909143400919719
+                golfCourse.icon = "dromoland"
+                GolfTrackerManager.createCourse(golfCourse.copy())
+                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+                golfCourse.title = "Lahinch GC - Old"
+                golfCourse.lat = 52.93535192772572
+                golfCourse.lng = -9.345525869316168
+                golfCourse.icon = "lahinch_old"
+                GolfTrackerManager.createCourse(golfCourse.copy())
+                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+                golfCourse.title = "Lahinch GC - Castle"
+                golfCourse.lat = 52.93535192772572
+                golfCourse.lng = -9.345525869316168
+                golfCourse.icon = "lahinch_castle"
+                GolfTrackerManager.createCourse(golfCourse.copy())
+                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+                golfCourse.title = "Shannon GC"
+                golfCourse.lat = 52.68938272732169
+                golfCourse.lng = -8.937344286642613
+                golfCourse.icon = "lahinch"
+                GolfTrackerManager.createCourse(golfCourse.copy())
+                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+
+
             }
         })
 
@@ -100,6 +106,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, Login::class.java))
             }
         })
+
+
     }
 
     private fun updateNavHeader(currentUser: FirebaseUser) {
