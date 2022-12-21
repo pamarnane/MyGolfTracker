@@ -16,10 +16,6 @@ class RoundViewModel : ViewModel() {
 
     private val round = MutableLiveData<GolfRoundModel>()
 
-    var observableRound: LiveData<GolfRoundModel>
-        get() = round
-        set(value) {round.value = value.value}
-
     fun addGolfRound(firebaseUser: MutableLiveData<FirebaseUser>, golfRound: GolfRoundModel) {
         status.value = try {
            // GolfTrackerManager.create(golfRound)

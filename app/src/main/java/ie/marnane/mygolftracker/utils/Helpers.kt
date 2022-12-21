@@ -8,6 +8,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.FragmentActivity
+import com.makeramen.roundedimageview.RoundedTransformationBuilder
 import com.squareup.picasso.Transformation
 import ie.marnane.mygolftracker.R
 import java.io.IOException
@@ -71,11 +72,11 @@ fun showImagePicker(intentLauncher : ActivityResultLauncher<Intent>) {
     intentLauncher.launch(chooseFile)
 }
 
-/*
+
 fun customTransformation() : Transformation =
     RoundedTransformationBuilder()
         .borderColor(Color.WHITE)
         .borderWidthDp(2F)
         .cornerRadiusDp(35F)
         .oval(false)
-        .build()*/
+        .build()

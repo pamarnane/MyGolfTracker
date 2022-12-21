@@ -19,6 +19,10 @@ object GolfTrackerManager : GolfTrackerStore {
         TODO("Not yet implemented")
     }
 
+    override fun findAllwImages(userId: String, roundsList: MutableLiveData<List<GolfRoundModel>>) {
+        TODO("Not yet implemented")
+    }
+
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, round: GolfRoundModel) {
         TODO("Not yet implemented")
     }

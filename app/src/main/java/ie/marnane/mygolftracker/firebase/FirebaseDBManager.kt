@@ -7,12 +7,13 @@ import ie.marnane.mygolftracker.models.GolfCourseModel
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerStore
 import timber.log.Timber
+import java.util.function.Predicate
+import kotlin.math.round
 
 object FirebaseDBManager : GolfTrackerStore {
     var database: DatabaseReference = FirebaseDatabase.getInstance().reference
 
     override fun findAll(userid: String, roundsList: MutableLiveData<List<GolfRoundModel>>) {
-
         database.child("user-rounds").child(userid)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
@@ -48,9 +49,34 @@ object FirebaseDBManager : GolfTrackerStore {
             }
     }
 
-
     override fun findAllwImages(roundsList: MutableLiveData<List<GolfRoundModel>>) {
         TODO("Not yet implemented")
+    }
+
+
+    override fun findAllwImages(userid: String, roundsList: MutableLiveData<List<GolfRoundModel>>) {
+        database.child("user-rounds").child(userid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.i("Firebase Golf Round error : ${error.message}")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val localList = ArrayList<GolfRoundModel>()
+                    val children = snapshot.children
+                    children.forEach {
+                        val round = it.getValue(GolfRoundModel::class.java)
+                        localList.add(round!!)
+                    }
+                    database.child("user-rounds").child(userid)
+                        .removeEventListener(this)
+
+                    val condition: Predicate<GolfRoundModel> = Predicate<GolfRoundModel> { round -> round.image == "" }
+                    localList.removeIf(condition)
+
+                    roundsList.value = localList
+                }
+            })
     }
 
 

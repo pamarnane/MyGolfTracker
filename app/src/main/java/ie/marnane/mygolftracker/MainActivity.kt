@@ -13,12 +13,14 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseUser
 import ie.marnane.mygolftracker.databinding.ActivityMainBinding
 import ie.marnane.mygolftracker.databinding.NavHeaderMainBinding
 import ie.marnane.mygolftracker.firebase.FirebaseDBManager
+import ie.marnane.mygolftracker.firebase.FirebaseImageManager
 import ie.marnane.mygolftracker.models.GolfCourseModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
@@ -32,6 +34,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navHeaderMainBinding : NavHeaderMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+/*        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.Theme_MyGolfTrackerDark) //when dark mode is enabled, we use the dark theme
+        } else {
+            setTheme(R.style.Theme_MyGolfTracker)  //default app theme
+        }*/
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,6 +57,45 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+
+        val golfCourse = GolfCourseModel()
+
+        golfCourse.title = "Ennis GC"
+        golfCourse.lat = 52.84092016654442
+        golfCourse.lng = -8.998135028815737
+        golfCourse.icon = "ennis"
+        GolfTrackerManager.createCourse(golfCourse.copy())
+//        FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+
+        golfCourse.title = "Dromoland Castle GC"
+        golfCourse.lat = 52.78218837292427
+        golfCourse.lng = -8.909143400919719
+        golfCourse.icon = "dromoland"
+        GolfTrackerManager.createCourse(golfCourse.copy())
+//        FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+        golfCourse.title = "Lahinch GC - Old"
+        golfCourse.lat = 52.93535192772572
+        golfCourse.lng = -9.345525869316168
+        golfCourse.icon = "lahinch_old"
+        GolfTrackerManager.createCourse(golfCourse.copy())
+//        FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+        golfCourse.title = "Lahinch GC - Castle"
+        golfCourse.lat = 52.93535192772572
+        golfCourse.lng = -9.345525869316168
+        golfCourse.icon = "lahinch_castle"
+        GolfTrackerManager.createCourse(golfCourse.copy())
+//        FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
+        golfCourse.title = "Shannon GC"
+        golfCourse.lat = 52.68938272732169
+        golfCourse.lng = -8.937344286642613
+        golfCourse.icon = "lahinch"
+        GolfTrackerManager.createCourse(golfCourse.copy())
+//        FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
+
     }
 
     public override fun onStart() {
@@ -56,47 +103,8 @@ class MainActivity : AppCompatActivity() {
         loggedInViewModel = ViewModelProvider(this).get(LoggedInViewModel::class.java)
         loggedInViewModel.liveFirebaseUser.observe(this, Observer { firebaseUser ->
             if (firebaseUser != null) {
-                //val currentUser = loggedInViewModel.liveFirebaseUser.value
-                /*if (currentUser != null)*/ updateNavHeader(loggedInViewModel.liveFirebaseUser.value!!)
-
-                val golfCourse = GolfCourseModel()
-
-                golfCourse.title = "Ennis GC"
-                golfCourse.lat = 52.84092016654442
-                golfCourse.lng = -8.998135028815737
-                golfCourse.icon = "ennis"
-                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
-
-
-                golfCourse.title = "Dromoland Castle GC"
-                golfCourse.lat = 52.78218837292427
-                golfCourse.lng = -8.909143400919719
-                golfCourse.icon = "dromoland"
-                GolfTrackerManager.createCourse(golfCourse.copy())
-                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
-
-                golfCourse.title = "Lahinch GC - Old"
-                golfCourse.lat = 52.93535192772572
-                golfCourse.lng = -9.345525869316168
-                golfCourse.icon = "lahinch_old"
-                GolfTrackerManager.createCourse(golfCourse.copy())
-                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
-
-                golfCourse.title = "Lahinch GC - Castle"
-                golfCourse.lat = 52.93535192772572
-                golfCourse.lng = -9.345525869316168
-                golfCourse.icon = "lahinch_castle"
-                GolfTrackerManager.createCourse(golfCourse.copy())
-                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
-
-                golfCourse.title = "Shannon GC"
-                golfCourse.lat = 52.68938272732169
-                golfCourse.lng = -8.937344286642613
-                golfCourse.icon = "lahinch"
-                GolfTrackerManager.createCourse(golfCourse.copy())
-                FirebaseDBManager.createCourse(loggedInViewModel.liveFirebaseUser, golfCourse)
-
-
+                val currentUser = loggedInViewModel.liveFirebaseUser.value
+                if (currentUser != null) updateNavHeader(loggedInViewModel.liveFirebaseUser.value!!)
 
             }
         })
@@ -114,6 +122,15 @@ class MainActivity : AppCompatActivity() {
         var headerView = binding.navView.getHeaderView(0)
         navHeaderMainBinding = NavHeaderMainBinding.bind(headerView)
         navHeaderMainBinding.navHeaderEmail.text = currentUser.email
+        if (currentUser.photoUrl != null) {
+            //if you're a google user
+            FirebaseImageManager.updateUserImage(
+                currentUser.uid,
+                currentUser.photoUrl,
+                navHeaderMainBinding.imageView,
+                false
+            )
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

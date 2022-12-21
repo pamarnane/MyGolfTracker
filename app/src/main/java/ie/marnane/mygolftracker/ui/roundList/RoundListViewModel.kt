@@ -1,4 +1,4 @@
-package ie.marnane.mygolftracker.ui.roundListTBD
+package ie.marnane.mygolftracker.ui.roundList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import timber.log.Timber
 
 class RoundListViewModel : ViewModel() {
 
-    private val golfRounds =
+    private var golfRounds =
         MutableLiveData<List<GolfRoundModel>>()
 
     val observableRoundsList: LiveData<List<GolfRoundModel>>

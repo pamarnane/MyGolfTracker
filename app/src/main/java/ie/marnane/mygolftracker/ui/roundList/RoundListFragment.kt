@@ -15,15 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ie.marnane.mygolftracker.R
 import ie.marnane.mygolftracker.adapters.GolfTrackerAdapter
 import ie.marnane.mygolftracker.adapters.GolfTrackerListener
 import ie.marnane.mygolftracker.databinding.FragmentRoundListBinding
 import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
-import ie.marnane.mygolftracker.ui.round.RoundFragment
-import ie.marnane.mygolftracker.ui.round.RoundFragmentDirections
-import ie.marnane.mygolftracker.ui.roundListTBD.RoundListViewModel
 import ie.marnane.mygolftracker.utils.*
 
 

@@ -198,7 +198,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             if (validInput) {
                 var uri = Uri.EMPTY
                  uri = FirebaseImageManager.imageUri.value
-                golfRound.image = uri.toString()
+                if (uri != null) golfRound.image = uri.toString()
                 roundViewModel.addGolfRound(loggedInViewModel.liveFirebaseUser, golfRound)
             }
             findNavController().popBackStack()
@@ -270,13 +270,7 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
                         if (result.data != null) {
                             Timber.i("Got Result ${result.data!!.data}")
                             golfRound.image = result.data!!.data!!.toString()
-                            var test = readImageUri(result.resultCode, result.data)
-                            /*golfRound.image = result.data!!.data!!
-                            app.golfRounds.update(golfRound)
-                            *//*                         Picasso.get()
-                                                         .load(golfRound.image)
-                                                         .into(binding.golfRound)*/
-                            var test1 = FirebaseImageManager
+                            FirebaseImageManager
                                 .updateRoundImage(loggedInViewModel.liveFirebaseUser.value!!.uid,
                                     readImageUri(result.resultCode, result.data),
                                     //navHeaderBinding.navHeaderImage,

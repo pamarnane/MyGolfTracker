@@ -17,6 +17,7 @@ interface GolfTrackerStore {
     fun findAll(userId:String, roundsList:MutableLiveData<List<GolfRoundModel>>)
     fun findById(userId: String, roundId: String, round:MutableLiveData<GolfRoundModel>)
     fun findAllwImages(roundsList:MutableLiveData<List<GolfRoundModel>>)
+    fun findAllwImages(userId: String, roundsList:MutableLiveData<List<GolfRoundModel>>)
     fun create(firebaseUser: MutableLiveData<FirebaseUser>, round: GolfRoundModel)
     fun update(userId: String, roundId: String, golfRound: GolfRoundModel)
     fun delete(userId: String, roundId: String)

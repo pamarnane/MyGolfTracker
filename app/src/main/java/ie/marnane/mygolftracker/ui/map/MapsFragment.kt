@@ -1,104 +1,118 @@
 package ie.marnane.mygolftracker.ui.map
 
 import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ie.marnane.mygolftracker.R
-import ie.marnane.mygolftracker.models.GolfCourseModel
-import ie.marnane.mygolftracker.models.GolfTrackerManager
+import ie.marnane.mygolftracker.models.GolfRoundModel
 import ie.marnane.mygolftracker.models.GolfTrackerManager.findAllCourses
+import ie.marnane.mygolftracker.ui.auth.LoggedInViewModel
+import timber.log.Timber
 
 class MapsFragment : Fragment() {
     private lateinit var mMap : GoogleMap
-    private lateinit var golfCourses: List<GolfCourseModel>
+    private lateinit var golfRounds: List<GolfRoundModel>
     private lateinit var mapsViewModel: MapsViewModel
-    private var mapReady = false
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
+    private var _firebaseUser : String = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        //mapsViewModel = ViewModelProvider(this).get(mapsViewModel::class.java)
-        return  inflater.inflate(R.layout.fragment_maps, container, false)
-       // return rootView
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+            if (firebaseUser != null) {
+                mapsViewModel.liveFirebaseUser.value = firebaseUser
+                _firebaseUser = firebaseUser.uid
+                mapsViewModel.getAllCourses(_firebaseUser)
+            }
+        })
 
+        mapsViewModel = ViewModelProvider(this).get(MapsViewModel::class.java)
+
+       mapsViewModel.observableRoundsList.observe(viewLifecycleOwner, Observer { result ->
+          if (result != null) {
+              Timber.i("MapsFragmentPatrick:" + result.toString())
+             // updateMap(result)
+          }
+      })
+        return  inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+        /*{
+                googleMap -> mMap = googleMap
+            mapReady = true
+            //updateMap(golfRounds)
+            var test = mapsViewModel.getAllCourses()
+        }*/
     }
 
     private val callback = OnMapReadyCallback { mMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        mapReady = true
+
+        var rounds: LiveData<List<GolfRoundModel>>? = null
+        if (_firebaseUser != "") {
+             rounds = mapsViewModel.getAllCourses(_firebaseUser)
+            Timber.i(rounds.toString())
+        }
 
         var golfCourses = findAllCourses()
         var avgLat = mutableListOf<Double>()
         var avgLng = mutableListOf<Double>()
+        var dict = mutableMapOf<String, Int>()
 
+        if (rounds != null) {
+            rounds.value?.forEach {
+                if (!dict.containsKey(it.course)) {
+                    dict[it.course] = 1
+                }else{
+                    var i = dict[it.course]
+                    if (i != null) {
+                        dict[it.course] = i + 1
+                    }
+                }
 
-
+            }
+        }
 
         golfCourses.forEach {
             var latlng: LatLng = LatLng(it.lat, it.lng)
             avgLat.add(it.lat)
             avgLng.add(it.lng)
-            mMap.addMarker(MarkerOptions()
-                .position(latlng)
-                .snippet("Rounds played: ${it.roundsPlayed}")
-                .flat(true)
-                .title(it.title)
+
+            if (dict.containsKey(it.title)) {
+                mMap.addMarker(MarkerOptions()
+                    .position(latlng)
+                    //.snippet("Rounds played: ${it.roundsPlayed}")
+                    .snippet("Rounds played: ${dict[it.title]}")
+                    .flat(true)
+                    .title(it.title)
                 )
-        }
-
-
-
-
-            val averageLatLng = LatLng(avgLat.average(), avgLng.average())
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(averageLatLng))
-        }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-       /* mapsViewModel.observableCoursesList.observe(viewLifecycleOwner, Observer {
-                golfCourses -> this.golfCourses = golfCourses
-            updateMap()
-        })*/
-    }
-
-    private fun updateMap() {
-        if (mapReady && golfCourses != null) {
-            golfCourses.forEach {
-                    golfCourses ->
-                if (!golfCourses.lng.isNaN() && !golfCourses.lat.isNaN()) {
-                    val marker = LatLng(golfCourses.lng, golfCourses.lat)
-                    mMap.addMarker(MarkerOptions().position(marker).title(golfCourses.title))
-                }
             }
         }
-    }
+            val averageLatLng = LatLng(avgLat.average(), avgLng.average())
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(averageLatLng, 7.5f))
+        }
 }

@@ -3,12 +3,14 @@ package ie.marnane.mygolftracker.firebase
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import ie.marnane.mygolftracker.utils.customTransformation
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.util.UUID
@@ -35,7 +37,6 @@ object FirebaseImageManager {
                 uploadTask.addOnSuccessListener { ut ->
                     ut.metadata!!.reference!!.downloadUrl.addOnCompleteListener { task ->
                         imageUri.value = task.result!!
-                        var test = imageUri.value
                     }
                 }
             }
@@ -88,6 +89,30 @@ object FirebaseImageManager {
         }.addOnFailureListener {
             imageUri.value = Uri.EMPTY
         }
+    }
+
+    fun updateUserImage(userid: String, imageUri : Uri?, imageView: ImageView, updating : Boolean) {
+        Picasso.get().load(imageUri)
+            .resize(200, 200)
+            .transform(customTransformation())
+            .memoryPolicy(MemoryPolicy.NO_CACHE)
+            .centerCrop()
+            .into(object : Target {
+                override fun onBitmapLoaded(bitmap: Bitmap?,
+                                            from: Picasso.LoadedFrom?
+                ) {
+                    Timber.i("DX onBitmapLoaded $bitmap")
+                    //uploadImageToFirebase(userid, bitmap!!,updating)
+                    imageView.setImageBitmap(bitmap)
+                }
+
+                override fun onBitmapFailed(e: java.lang.Exception?,
+                                            errorDrawable: Drawable?) {
+                    Timber.i("DX onBitmapFailed $e")
+                }
+
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+            })
     }
 
 }

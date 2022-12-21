@@ -12,10 +12,15 @@
         tools:layout="@layout/fragment_round_list">
         <action
             android:id="@+id/action_roundListFragment_to_roundFragment"
-            app:destination="@id/roundFragment" />
+            app:destination="@id/roundFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
         <action
             android:id="@+id/action_roundListFragment_to_roundUpdateFragment"
-            app:destination="@id/roundUpdateFragment" />
+            app:destination="@id/roundUpdateFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_roundListFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 
     <fragment
@@ -31,7 +36,8 @@
         tools:layout="@layout/fragment_round" >
         <action
             android:id="@+id/action_roundFragment_to_roundListFragment"
-            app:destination="@id/roundListFragment" />
+            app:destination="@id/roundListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
         <argument
             android:name="round"
             app:argType="ie.marnane.mygolftracker.models.GolfRoundModel" />
