@@ -50,6 +50,8 @@
     <string name="enter_course_name">Course name must be entered</string>
     <string name="enter_course_date">Date played must be entered</string>
     <string name="messageLoading">Please wait for rounds to load.....</string>
+    <string name="theme_change">Change Theme</string>
+    <string name="choose_theme_text">Choose theme</string>
 
     <!-- START Firebase Resources-->
 

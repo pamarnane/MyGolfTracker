@@ -27,6 +27,11 @@
                     android:icon="@android:drawable/ic_menu_revert"
                     android:onClick="signOut"
                     android:title="@string/sign_out" />
+                <item
+                    android:id="@+id/themeChange"
+                    android:icon="@drawable/ic_baseline_dark_mode_24"
+                    android:onClick="changeTheme"
+                    android:title="@string/theme_change" />
             </menu>
         </item>
     </group>

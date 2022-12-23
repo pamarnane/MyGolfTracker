@@ -1,9 +1,12 @@
 package ie.marnane.mygolftracker
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -150,5 +153,53 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, Login::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
+    }
+
+    fun changeTheme(item: MenuItem) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.choose_theme_text))
+        val styles = arrayOf("Light", "Dark", "System default")
+        val checkedItem = MyPreferences(this).darkMode
+
+        builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
+
+            when (which) {
+                0 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    MyPreferences(this).darkMode = 0
+                    delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+                1 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    MyPreferences(this).darkMode = 1
+                    delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+                2 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    MyPreferences(this).darkMode = 2
+                    delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+
+            }
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    class MyPreferences(context: Context?) {
+
+        companion object {
+            private const val DARK_STATUS = "io.github.manuelernesto.DARK_STATUS"
+        }
+
+        private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        var darkMode = preferences.getInt(DARK_STATUS, 0)
+            set(value) = preferences.edit().putInt(DARK_STATUS, value).apply()
+
     }
 }

@@ -198,10 +198,14 @@ class RoundFragment : Fragment(), AdapterView.OnItemSelectedListener {
             if (validInput) {
                 var uri = Uri.EMPTY
                  uri = FirebaseImageManager.imageUri.value
-                if (uri != null) golfRound.image = uri.toString()
+                if (uri != null){
+                    golfRound.email = loggedInViewModel.liveFirebaseUser.value?.email
+                    golfRound.image = uri.toString()
+                }
                 roundViewModel.addGolfRound(loggedInViewModel.liveFirebaseUser, golfRound)
             }
-            findNavController().popBackStack()
+            //findNavController().popBackStack()
+            findNavController().navigate(R.id.action_roundFragment_to_roundListFragment)
         }
     }
 

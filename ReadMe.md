@@ -32,7 +32,7 @@ Due to the amouint of time taken to refactor the application, only a few items w
 - [ ] Add par for each hole and preset score input for new records to be that value
 
 ## UML & Class Diagram
-TBA
+![MyGolfTracker UML Diagram](https://github.com/pamarnane/MyGolfTrackerMVVM/blob/master/MyGolfTrackerUML.png)
 
 ## UX/DX Approach
 The main focus of the UX/DX of this was towards simplicity and using the standard Android Material UI elements. This helped keep a consistent approach while allowing focus to be more on the MVVM Design pattern and integration of Firebase services.
@@ -65,3 +65,6 @@ This would also benefit me with a current project that I am working on with my e
 
 ### Creation of Google Maps Fragment
 - [https://www.youtube.com/watch?v=ZAOfYRY8zJk]
+
+### Dark Mode Button
+- [https://github.com/manuelernesto/darkmode_app_with_kotlin]
