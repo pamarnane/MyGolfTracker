@@ -9,8 +9,8 @@ The rounds recorded are listed when the user opens the application. From this li
 
 Courses that are available for the user to select are seeded on application startup if required.
 
-This is the second iteration of the MyGolfTracker app. Due to the amount of refactoring to migrate from an MVC to MVVM architecture, this new repository was created.
-The original repository is located here: [https://github.com/pamarnane/MyGolfTracker]
+This is the second iteration of the MyGolfTracker app. Due to the amount of refactoring to migrate from an MVC to MVVM architecture, this new branch was created.
+The original application is still present as the master branch, and is located here: [https://github.com/pamarnane/MyGolfTracker]
 
 Other updates that have been made to the application are:
     - Navigation drawer 
